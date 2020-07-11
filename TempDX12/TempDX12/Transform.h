@@ -10,9 +10,10 @@ private:
 	CTransform(const CTransform& rhs);
 	virtual ~CTransform() = default;
 public: // Getter
-	_vec3*			Get_StateInfo(STATE eState);
+	_vec3*					Get_StateInfo(STATE eState);
 	_vec3					Get_Scale();
 	_matrix					Get_Matrix_Inverse() const;
+	_matrix					Get_Matrix() { return m_matWorld; }
 public: // Setter
 	void					Set_StateInfo(STATE eState, const _vec3* pInfo);
 public:

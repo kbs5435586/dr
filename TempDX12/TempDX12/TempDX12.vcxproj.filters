@@ -109,6 +109,12 @@
     <Filter Include="02. GameObject\98. Public\00. Camera\00. Debug_Camera">
       <UniqueIdentifier>{33eb5154-74d6-47a6-be6f-537af9c95def}</UniqueIdentifier>
     </Filter>
+    <Filter Include="96. ShaderFiles">
+      <UniqueIdentifier>{7925c94e-a055-4ee0-86a3-fc47de7ad026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Engine\01. Utility\02. Component\01. Component\03. Shader">
+      <UniqueIdentifier>{9d88ed7d-28da-46f1-acdf-ce5040447a53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -213,6 +219,9 @@
     <ClInclude Include="Debug_Camera.h">
       <Filter>02. GameObject\98. Public\00. Camera\00. Debug_Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>97. Engine\01. Utility\02. Component\01. Component\03. Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="TempDX12.ico">
@@ -303,5 +312,13 @@
     <ClCompile Include="Debug_Camera.cpp">
       <Filter>02. GameObject\98. Public\00. Camera\00. Debug_Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>97. Engine\01. Utility\02. Component\01. Component\03. Shader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ShaderFiles\Shader_Default.hlsl">
+      <Filter>96. ShaderFiles</Filter>
+    </None>
   </ItemGroup>
 </Project>

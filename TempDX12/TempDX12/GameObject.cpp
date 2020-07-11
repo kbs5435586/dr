@@ -34,6 +34,31 @@ void CGameObject::Render_GameObject()
 {
 }
 
+HRESULT CGameObject::CreatePipeLine(CShader* pShader)
+{
+	return E_NOTIMPL;
+}
+
+D3D12_RASTERIZER_DESC CGameObject::CreateRaterizerState()
+{
+	return D3D12_RASTERIZER_DESC();
+}
+
+D3D12_DEPTH_STENCIL_DESC CGameObject::CreateDepthStencilState()
+{
+	return D3D12_DEPTH_STENCIL_DESC();
+}
+
+D3D12_BLEND_DESC CGameObject::CreateBlendState()
+{
+	return D3D12_BLEND_DESC();
+}
+
+D3D12_INPUT_LAYOUT_DESC CGameObject::CreateInputLayout()
+{
+	return D3D12_INPUT_LAYOUT_DESC();
+}
+
 HRESULT CGameObject::Add_Component(const _tchar* pComponentTag, CComponent* pComponent)
 {
 	if (nullptr == pComponent)

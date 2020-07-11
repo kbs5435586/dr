@@ -21,6 +21,8 @@ HRESULT CScene_Logo::Ready_Scene()
 		return E_FAIL;
 	if(FAILED(Ready_Layer_Tri(L"Layer_Tri")))
 		return E_FAIL;
+
+	CDevice::GetInstance()->GetCommandList()->Close();
 	return S_OK;
 }
 
@@ -57,6 +59,20 @@ HRESULT CScene_Logo::Ready_Prototype_GameObject()
 
 HRESULT CScene_Logo::Ready_Prototype_Component()
 {
+	CManagement* pManagement = CManagement::GetInstance();
+	if (nullptr == pManagement)
+		return E_FAIL;
+	pManagement->AddRef();
+
+	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Shader_Default", 
+		CShader::Create(m_pGraphic_Device, L"../ShaderFiles/Shader_Default.hlsl", "VSMain", "PSMain", 0))))
+		return E_FAIL;
+
+	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Buffer_TriCol", 
+		CBuffer_TriCol::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	Safe_Release(pManagement);
 	return S_OK;
 }
 
@@ -69,11 +85,7 @@ HRESULT CScene_Logo::Ready_Layer_Camera(const _tchar* pLayerTag)
 
 	pManagement->AddRef();
 
-	// For.Camera_Debug
 	CDebug_Camera* pCameraObject = nullptr;
-
-	// 원형카메라를 복제해서 레이어에 추가할(실제 사용할)객체를 생성한다.레이어에 추가한다ㅏ.
-	// 그렇게 복제된 객체를 건져온다.
 	if (FAILED(pManagement->Add_GameObjectToLayer(L"GameObject_Camera_Debug", SCENE_STAGE, pLayerTag, (CGameObject**)&pCameraObject)))
 		return E_FAIL;
 
@@ -108,11 +120,11 @@ HRESULT CScene_Logo::Ready_Layer_Tri(const _tchar* pLayerTag)
 
 	pManagement->AddRef();
 
-	// For.Back_Logo
 	if (FAILED(pManagement->Add_GameObjectToLayer(L"GameObject_Back_Logo", SCENE_LOGO, pLayerTag)))
 		return E_FAIL;
 
 	Safe_Release(pManagement);
+	return S_OK;
 }
 
 

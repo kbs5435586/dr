@@ -21,9 +21,11 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(Ready_Prototype_GameObject()))
 		return E_FAIL;
-
 	if (FAILED(Ready_Start_Scene(SCENE_LOGO)))
 		return E_FAIL;
+
+
+
 	return S_OK;
 }
 
@@ -43,6 +45,8 @@ void CMainApp::Render_MainApp()
 	m_pDevice->Begin();
 
 	m_pManagement->Render_Management();
+	if (nullptr != m_pRenderer)
+		m_pRenderer->Render_RenderGroup();
 
 	m_pDevice->End();
 	ComputeFrame();
@@ -60,8 +64,6 @@ HRESULT CMainApp::Ready_Prototype_Component()
 	if (FAILED(m_pManagement->Add_Prototype_Component(SCENE_STATIC, L"Component_Renderer", m_pRenderer = CRenderer::Create(m_pGraphic_Device))))
 		return E_FAIL;
 	m_pRenderer->AddRef();
-	if (FAILED(m_pManagement->Add_Prototype_Component(SCENE_STATIC, L"Component_Buffer_TriCol", CBuffer_TriCol::Create(m_pGraphic_Device))))
-		return E_FAIL;
 
 	return S_OK;
 }

@@ -20,6 +20,8 @@ public:
 	void						WaitForGpuComplete();
 	void						MoveToNextFrame();
 public:
+	HRESULT						CreateRootSignature();
+public:
 	ID3D12Device*				GetDevice() { return m_pDevice; }
 	ID3D12GraphicsCommandList*	GetCommandList() { return m_pCommandList; }
 	ID3D12CommandAllocator*		GetCommandAllocator() { return m_pCommandAllocator; }
@@ -58,6 +60,8 @@ private:
 	ID3D12GraphicsCommandList*	m_pCommandList = nullptr;
 	ID3D12Fence*				m_pFence = nullptr;
 private:
+	ID3D12RootSignature*		m_pRootSignature = nullptr;
+private:
 	HANDLE						m_hFenceEvent = {};
 	_uint						m_iFenceValues[m_iSwapchainBuffer];
 #if defined(_DEBUG)
@@ -65,12 +69,11 @@ private:
 #endif	
 	D3D12_VIEWPORT				m_ViewPort = {};
 	D3D12_RECT					m_ScissorRect = {};
-
-	vector<ID3D12RootSignature*>m_vecRootSignature;
 	vector<ID3D12PipelineState*>m_vecPipeline;
 public:
-	vector<ID3D12RootSignature*>& GetVecRootSignature() { return m_vecRootSignature; }
-	vector<ID3D12PipelineState*>& GetVecPipeLine() { return m_vecPipeline; }
+	vector<ID3D12PipelineState*>&	GetVecPipeLine() { return m_vecPipeline; }
+public:
+	ID3D12RootSignature*			GetRootSignature() { return m_pRootSignature; }
 protected:
 	virtual void				Free();
 };

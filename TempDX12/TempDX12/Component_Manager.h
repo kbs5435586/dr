@@ -4,6 +4,7 @@
 #include "Buffer_TriCol.h"
 #include "Renderer.h"
 #include "Transform.h"
+#include "Shader.h"
 class CComponent;
 class CComponent_Manager :
 	public CBase

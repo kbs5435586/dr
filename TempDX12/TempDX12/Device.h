@@ -1,5 +1,6 @@
 #pragma once
 #include "Base.h"
+class CRenderer;
 class CDevice :
     public CBase
 {
@@ -40,6 +41,10 @@ public:
 public:
 	void						Begin();
 	void						End();
+public:
+	void						TempBegin();
+	void						TempEnd();
+	void						TempUpdate(CRenderer* pRenderer);
 private:
 	_bool						m_bMsaaEnalbe = false;
 	_uint						m_iMsaaQualityLv = 0;

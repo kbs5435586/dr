@@ -42,13 +42,14 @@ void CMainApp::Render_MainApp()
 	if (nullptr == m_pManagement)
 		return;
 
-	m_pDevice->Begin();
+	//m_pDevice->Begin();
 
 	m_pManagement->Render_Management();
-	if (nullptr != m_pRenderer)
-		m_pRenderer->Render_RenderGroup();
+	//if (nullptr != m_pRenderer)
+	//	m_pRenderer->Render_RenderGroup();
 
-	m_pDevice->End();
+	m_pDevice->TempUpdate(m_pRenderer);
+	//m_pDevice->End();
 	ComputeFrame();
 }
 

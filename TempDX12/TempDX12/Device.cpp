@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "Device.h"
-
+#include "Renderer.h"
 _IMPLEMENT_SINGLETON(CDevice);
 CDevice::CDevice()
 {
@@ -34,6 +34,8 @@ HRESULT CDevice::OnCreate()
 	if (FAILED(CreateRootSignature()))
 		return E_FAIL;
 
+
+	m_pCommandQueue->SetName(L"CommandQueue");
 	return S_OK;
 }
 
@@ -145,8 +147,8 @@ HRESULT CDevice::CreateCommandQueueAndList()
 	if (FAILED(m_pDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_pCommandAllocator, nullptr, __uuidof(ID3D12CommandList), (void**)&m_pCommandList)))
 		return E_FAIL;
 
-	//if (FAILED(m_pCommandList->Close()))
-	//	return E_FAIL;
+	if (FAILED(m_pCommandList->Close()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -330,7 +332,8 @@ HRESULT CDevice::CreateRootSignature()
 void CDevice::Begin()
 {
 	CDevice::GetInstance()->GetCommandAllocator()->Reset();
-	CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0);
+	if(FAILED(CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0)))
+		return;
 
 	m_pCommandList->RSSetViewports(1, &m_ViewPort);
 	m_pCommandList->RSSetScissorRects(1, &m_ScissorRect);
@@ -375,6 +378,60 @@ void CDevice::End()
 	CDevice::GetInstance()->GetCommandList()->Close();
 	ID3D12CommandList* ppd3dCommandLists[] = { CDevice::GetInstance()->GetCommandList() };
 	CDevice::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, ppd3dCommandLists);
+
+	WaitForGpuComplete();
+	m_pSwapChain->Present(0, 0);
+	MoveToNextFrame();
+}
+
+void CDevice::TempBegin()
+{
+	CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0);
+}
+
+void CDevice::TempEnd()
+{
+	CDevice::GetInstance()->GetCommandList()->Close();
+	ID3D12CommandList* ppd3dCommandLists[] = { CDevice::GetInstance()->GetCommandList() };
+	CDevice::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, ppd3dCommandLists);
+}
+
+void CDevice::TempUpdate(CRenderer* pRenderer)
+{
+	
+	TempBegin();
+
+	m_pCommandList->RSSetViewports(1, &m_ViewPort);
+	m_pCommandList->RSSetScissorRects(1, &m_ScissorRect);
+	D3D12_RESOURCE_BARRIER Resource_Barrier;
+	ZeroMemory(&Resource_Barrier, sizeof(D3D12_RESOURCE_BARRIER));
+
+	Resource_Barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	Resource_Barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	Resource_Barrier.Transition.pResource = m_pRenderTargetBuffers[m_iSwapChainBufferIdx];
+	Resource_Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+	Resource_Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	Resource_Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	m_pCommandList->ResourceBarrier(1, &Resource_Barrier);
+	D3D12_CPU_DESCRIPTOR_HANDLE RtvCPUDescriptorHandle = m_pRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	RtvCPUDescriptorHandle.ptr += (m_iSwapChainBufferIdx * m_iRtvDescriptorIncrementSize);
+	D3D12_CPU_DESCRIPTOR_HANDLE DsvCPUDescriptorHandle = m_pDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	m_pCommandList->OMSetRenderTargets(1, &RtvCPUDescriptorHandle, FALSE, &DsvCPUDescriptorHandle);
+	float pfClearColor[4] = { 0.f, 0.f, 1.f, 1.f };
+	m_pCommandList->ClearRenderTargetView(RtvCPUDescriptorHandle, pfClearColor, 0, NULL);
+	m_pCommandList->ClearDepthStencilView(DsvCPUDescriptorHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, NULL);
+
+	pRenderer->Render_RenderGroup();
+
+
+	Resource_Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	Resource_Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+	Resource_Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	m_pCommandList->ResourceBarrier(1, &Resource_Barrier);
+
+
+	TempEnd();
+
 
 	WaitForGpuComplete();
 	m_pSwapChain->Present(0, 0);

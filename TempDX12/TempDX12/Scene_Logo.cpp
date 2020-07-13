@@ -11,10 +11,8 @@ CScene_Logo::CScene_Logo(ID3D12Device* pGraphic_Device)
 
 HRESULT CScene_Logo::Ready_Scene()
 {
-
 	if (FAILED(Ready_Prototype_Component()))
 		return E_FAIL;
-
 	if (FAILED(Ready_Prototype_GameObject()))
 		return E_FAIL;
 	if(FAILED(Ready_Layer_Camera(L"Layer_Camera")))
@@ -89,21 +87,19 @@ HRESULT CScene_Logo::Ready_Layer_Camera(const _tchar* pLayerTag)
 	if (FAILED(pManagement->Add_GameObjectToLayer(L"GameObject_Camera_Debug", SCENE_STAGE, pLayerTag, (CGameObject**)&pCameraObject)))
 		return E_FAIL;
 
-	CAMERADESC		CameraDesc;
-	ZeroMemory(&CameraDesc, sizeof(CAMERADESC));
-	CameraDesc.vEye = _vec3(0.f, 20.f, -10.f);
-	CameraDesc.vAt = _vec3(0.f, 0.f, 0.f);
-	CameraDesc.vAxisY = _vec3(0.f, 1.f, 0.f);
+	CAMERADESC		tCameraDesc;
+	ZeroMemory(&tCameraDesc, sizeof(CAMERADESC));
+	tCameraDesc.vEye = _vec3(0.f, 10.f, -10.f);
+	tCameraDesc.vAt = _vec3(0.f, 0.f, 1.f);
+	tCameraDesc.vAxisY = _vec3(0.f, 1.f, 0.f);
+	PROJDESC		tProjDesc;
+	ZeroMemory(&tProjDesc, sizeof(tProjDesc));
+	tProjDesc.fFovY = XMConvertToRadians(60.f);
+	tProjDesc.fAspect = _float(WINCX) / WINCY;
+	tProjDesc.fNear = 0.2f;
+	tProjDesc.fFar = 500.f;
 
-	PROJDESC		ProjDesc;
-	ZeroMemory(&ProjDesc, sizeof(PROJDESC));
-	ProjDesc.fFovY = XMConvertToRadians(60.0f);
-
-	ProjDesc.fAspect = _float(WINCX) / WINCY;
-	ProjDesc.fNear = 0.2f;
-	ProjDesc.fFar = 500.0f;
-
-	if (FAILED(pCameraObject->SetUp_CameraProjDesc(CameraDesc, ProjDesc)))
+	if (FAILED(pCameraObject->SetUp_CameraProjDesc(tCameraDesc, tProjDesc)))
 		return E_FAIL;
 
 	Safe_Release(pManagement);

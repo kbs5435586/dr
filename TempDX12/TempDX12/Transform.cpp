@@ -17,6 +17,7 @@ CTransform::CTransform(const CTransform& rhs)
 
 HRESULT CTransform::Ready_Transform()
 {
+	XMStoreFloat4x4(&m_matWorld, XMMatrixIdentity());
 	return S_OK;
 }
 
@@ -42,6 +43,7 @@ _vec3 CTransform::Get_Scale()
 
 _matrix CTransform::Get_Matrix_Inverse() const
 {
+	//XMFLOAT4X4
 	_matrix mat = m_matWorld;
 	mat = Matrix::Inverse(mat);
 	return mat;

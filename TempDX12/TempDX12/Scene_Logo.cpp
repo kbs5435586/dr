@@ -89,7 +89,7 @@ HRESULT CScene_Logo::Ready_Layer_Camera(const _tchar* pLayerTag)
 
 	CAMERADESC		tCameraDesc;
 	ZeroMemory(&tCameraDesc, sizeof(CAMERADESC));
-	tCameraDesc.vEye = _vec3(0.f, 10.f, -10.f);
+	tCameraDesc.vEye = _vec3(0.f, 0.f, -5.f);
 	tCameraDesc.vAt = _vec3(0.f, 0.f, 1.f);
 	tCameraDesc.vAxisY = _vec3(0.f, 1.f, 0.f);
 	PROJDESC		tProjDesc;

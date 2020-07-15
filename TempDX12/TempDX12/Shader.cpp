@@ -30,8 +30,11 @@ HRESULT CShader::Complie_Shader()
 {
 	if (FAILED(D3DCompileFromFile(m_pFilePath, nullptr, nullptr, m_pVSEntryPoint, "vs_5_1", m_iCompileFlags, 0, &m_pVertexShader, nullptr)))
 		return E_FAIL;
+
 	if (FAILED(D3DCompileFromFile(m_pFilePath, nullptr, nullptr, m_pPSEntryPoint, "ps_5_1", m_iCompileFlags, 0, &m_pPixelShader, nullptr)))
 		return E_FAIL;
+
+	
 	return S_OK;
 }
 

@@ -20,7 +20,7 @@ HRESULT CScene_Logo::Ready_Scene()
 	if(FAILED(Ready_Layer_Tri(L"Layer_Tri")))
 		return E_FAIL;
 
-	CDevice::GetInstance()->GetCommandList()->Close();
+	//CDevice::GetInstance()->GetCommandList()->Close();
 	return S_OK;
 }
 

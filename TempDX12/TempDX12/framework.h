@@ -43,6 +43,7 @@ using namespace std;
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
+#include "d3dx12.h"
 
 #include "Define.h"
 #include "Extern.h"

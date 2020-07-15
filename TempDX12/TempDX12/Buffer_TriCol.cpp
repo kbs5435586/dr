@@ -24,24 +24,27 @@ HRESULT CBuffer_TriCol::Ready_VIBuffer()
 	pVertices[1] = VTXCOL(XMFLOAT3(0.5f, -0.5f, 0.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.f));
 	pVertices[2] = VTXCOL(XMFLOAT3(-0.5f, -0.5f, 0.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 
-	
-	CDevice::GetInstance()->TempBegin();
-	// CommandList Open
-	//CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0);
 
-	m_pVertexBuffer = CreateBufferResource(m_pGraphic_Device, CDevice::GetInstance()->GetCommandList(),pVertices,
-		m_iStride * m_iVertices, D3D12_HEAP_TYPE_DEFAULT, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pVertexUploadBuffer);
+	if (FAILED(m_pGraphic_Device->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+		D3D12_HEAP_FLAG_NONE,
+		&CD3DX12_RESOURCE_DESC::Buffer(sizeof(pVertices)),
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&m_pVertexBuffer))))
+		return E_FAIL;
 
-	m_pVertexBuffer->SetName(L"Name");
+	UINT8* pVertexDataBegin;
+	CD3DX12_RANGE readRange(0, 0); 
+	if(FAILED(m_pVertexBuffer->Map(0, &readRange, reinterpret_cast<void**>(&pVertexDataBegin))))
+		return E_FAIL;
+	memcpy(pVertexDataBegin, pVertices, sizeof(pVertices));
+	m_pVertexBuffer->Unmap(0, nullptr);
 
-	CDevice::GetInstance()->TempEnd();
-	// CommandList Close
-	//CDevice::GetInstance()->GetCommandList()->Close();
 
 	m_VertexBufferView.BufferLocation = m_pVertexBuffer->GetGPUVirtualAddress();
 	m_VertexBufferView.StrideInBytes = m_iStride;
 	m_VertexBufferView.SizeInBytes = m_iStride * m_iVertices;
-
 
 	CDevice::GetInstance()->WaitForGpuComplete();
 	return S_OK;

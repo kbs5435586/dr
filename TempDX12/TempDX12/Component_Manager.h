@@ -2,6 +2,7 @@
 #include "Base.h"
 
 #include "Buffer_TriCol.h"
+#include "Buffer_RectCol.h"
 #include "Renderer.h"
 #include "Transform.h"
 #include "Shader.h"

@@ -2,7 +2,7 @@
 #include "GameObject.h"
 class CTransform;
 class CRenderer;
-class CBuffer_TriCol;
+class CBuffer_RectCol;
 class CShader;
 class CRect :
     public CGameObject
@@ -30,9 +30,9 @@ private:
 	virtual void							Free();
 	HRESULT									Ready_Component();
 private:
-	CTransform*				m_pTransformCom = nullptr;
-	CRenderer*				m_pRendererCom = nullptr;
-	CBuffer_TriCol*			m_pBufferCom = nullptr;
-	CShader*				m_pShaderCom = nullptr;
+	CTransform*								m_pTransformCom = nullptr;
+	CRenderer*								m_pRendererCom = nullptr;
+	CBuffer_RectCol*						m_pBufferCom = nullptr;
+	CShader*								m_pShaderCom = nullptr;
 };
 

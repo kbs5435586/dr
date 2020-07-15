@@ -70,6 +70,10 @@ HRESULT CScene_Logo::Ready_Prototype_Component()
 		CBuffer_TriCol::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Buffer_RectCol",
+		CBuffer_RectCol::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	Safe_Release(pManagement);
 	return S_OK;
 }

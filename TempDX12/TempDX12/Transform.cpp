@@ -75,18 +75,6 @@ void CTransform::Go_Straight(const _float& fTimeDelta)
 
 void CTransform::Go_Left(const _float& fTimeDelta)
 {
-	_vec3		vLook, vPosition;
-	vLook = *Get_StateInfo(STATE_LOOK);
-	vPosition = *Get_StateInfo(STATE_POSITION);
-
-	vLook = Vector3::Normalize(vLook);
-	vLook = Vector3::ScalarProduct(vLook, m_fSpeed_Move * fTimeDelta, false);
-	vPosition = Vector3::Add(vPosition, vLook);
-	Set_StateInfo(STATE_POSITION, &vPosition);
-}
-
-void CTransform::Go_Right(const _float& fTimeDelta)
-{
 	_vec3		vRight, vPosition;
 
 	vRight = *Get_StateInfo(STATE_RIGHT);
@@ -98,7 +86,7 @@ void CTransform::Go_Right(const _float& fTimeDelta)
 	Set_StateInfo(STATE_POSITION, &vPosition);
 }
 
-void CTransform::BackWard(const _float& fTimeDelta)
+void CTransform::Go_Right(const _float& fTimeDelta)
 {
 	_vec3		vRight, vPosition;
 
@@ -111,6 +99,37 @@ void CTransform::BackWard(const _float& fTimeDelta)
 	Set_StateInfo(STATE_POSITION, &vPosition);
 }
 
+void CTransform::BackWard(const _float& fTimeDelta)
+{
+	_vec3		vLook, vPosition;
+	vLook = *Get_StateInfo(STATE_LOOK);
+	vPosition = *Get_StateInfo(STATE_POSITION);
+
+	vLook = Vector3::Normalize(vLook);
+	vLook = Vector3::ScalarProduct(vLook, m_fSpeed_Move * -fTimeDelta, false);
+	vPosition = Vector3::Add(vPosition, vLook);
+	Set_StateInfo(STATE_POSITION, &vPosition);
+}
+void CTransform::Rotation_Axis(const _float& fTimeDelta, const _vec3* pAxis)
+{
+	_vec3		vDir[3];
+
+	for (size_t i = 0; i < 3; ++i)
+		vDir[i] = *Get_StateInfo(STATE(i));
+
+	_matrix			matRot;
+	XMVECTOR vAxis = ::XMLoadFloat3(pAxis);
+
+	DirectX::XMStoreFloat4x4(&matRot, DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationAxis(vAxis, m_fSpeed_Rotation * fTimeDelta)));
+
+	XMMATRIX mat = ::XMLoadFloat4x4(&matRot);
+	for (size_t i = 0; i < 3; ++i)
+		vDir[i] = Vector3::TransformNormal(vDir[i], mat);
+
+	Set_StateInfo(STATE_RIGHT, &vDir[STATE_RIGHT]);
+	Set_StateInfo(STATE_UP, &vDir[STATE_UP]);
+	Set_StateInfo(STATE_LOOK, &vDir[STATE_LOOK]);
+}
 void CTransform::SetUp_RotationY(const _float& fRadian)
 {
 	_vec3		vRight(1.f, 0.f, 0.f), vUp(0.f, 1.f, 0.f), vLook(0.f, 0.f, 1.f);

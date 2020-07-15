@@ -28,11 +28,14 @@ HRESULT CRect::Ready_GameObject()
 		return E_FAIL;
 
 	m_pTransformCom->SetUp_Speed(30.f, XMConvertToRadians(30.f));
+	//m_pTransformCom->SetUp_RotationY(XMConvertToRadians(60));
+	m_pTransformCom->Set_StateInfo(CTransform::STATE_POSITION, &_vec3(0.f, 0.f, 0.f));
 	return S_OK;
 }
 
 _int CRect::Update_GameObject(const _float& fTimeDelta)
 {
+
 	return _int();
 }
 
@@ -55,6 +58,7 @@ void CRect::Render_GameObject()
 
 	if (nullptr != m_pShaderCom)
 		m_pShaderCom->SetUp_OnShader(m_pPipeLine, matWorld, matView, matProj);
+
 	if (nullptr != m_pBufferCom)
 		m_pBufferCom->Render_VIBuffer();
 }
@@ -146,8 +150,8 @@ D3D12_INPUT_LAYOUT_DESC CRect::CreateInputLayout()
 {
 	UINT nInputElementDescs = 2;
 	D3D12_INPUT_ELEMENT_DESC* pd3dInputElementDescs = new D3D12_INPUT_ELEMENT_DESC[nInputElementDescs];
-	pd3dInputElementDescs[0] = { "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
-	pd3dInputElementDescs[1] = { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
+	pd3dInputElementDescs[0] = { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
+	pd3dInputElementDescs[1] = { "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 };
 	D3D12_INPUT_LAYOUT_DESC d3dInputLayoutDesc;
 	d3dInputLayoutDesc.pInputElementDescs = pd3dInputElementDescs;
 	d3dInputLayoutDesc.NumElements = nInputElementDescs;
@@ -169,7 +173,7 @@ HRESULT CRect::Ready_Component()
 	if (FAILED(Add_Component(L"Com_Renderer", m_pRendererCom)))
 		return E_FAIL;
 
-	m_pBufferCom = (CBuffer_TriCol*)pManagement->Clone_Component(SCENE_LOGO, L"Component_Buffer_TriCol");
+	m_pBufferCom = (CBuffer_RectCol*)pManagement->Clone_Component(SCENE_LOGO, L"Component_Buffer_RectCol");
 	NULL_CHECK_VAL(m_pBufferCom, E_FAIL);
 	if (FAILED(Add_Component(L"Com_Buffer", m_pBufferCom)))
 		return E_FAIL;

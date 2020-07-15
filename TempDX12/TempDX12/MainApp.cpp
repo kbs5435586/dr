@@ -23,7 +23,8 @@ HRESULT CMainApp::Ready_MainApp()
 		return E_FAIL;
 	if (FAILED(Ready_Start_Scene(SCENE_LOGO)))
 		return E_FAIL;
-
+	if (FAILED(CInput::GetInstance()->Ready_Input_Device(g_hInstance, g_hWnd)))
+		return E_FAIL;
 
 
 	return S_OK;
@@ -45,6 +46,7 @@ void CMainApp::Render_MainApp()
 	//m_pDevice->Begin();
 
 	m_pManagement->Render_Management();
+	CInput::GetInstance()->SetUp_InputState();
 	//if (nullptr != m_pRenderer)
 	//	m_pRenderer->Render_RenderGroup();
 

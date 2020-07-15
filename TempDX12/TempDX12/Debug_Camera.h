@@ -18,5 +18,7 @@ public:
 	virtual CGameObject*		Clone_GameObject();
 protected:
 	virtual void				Free();
+private:
+	POINT					m_ptMouse;
 };
 

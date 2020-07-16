@@ -83,11 +83,30 @@ int main()
 	// 4-2. 연결된 클라이언트에게 Hi send
 	send(clientSocket, sendData, strlen(sendData) + 1, 0);
 
-	SetGameTitle("가위 바위 보 게임 시작");
+	cout << "가위 바위 보 게임 시작 !!" << endl;
 
 	while (flow--)
 	{
-		itemServer=Input
+		cout << "당신의 선택은? : ";
+		cin >> itemServer;
+	
+		// 상대의 가위,바위,보 정보 recv 대기
+		recvByte = recv(clientSocket, recvData, sizeof(recvData), 0);
+		if (recvByte < 1) break;
+
+		itemClient = recvData[0];
+		result = gameResult[itemServer][itemClient];
+		sendData[0] = itemServer;
+
+		// 서버의 값을 클라에 전송
+		send(clientSocket, sendData, 1, 0);
+
+		// 결과 출력
+		cout << result << endl;
+
+		// 게임 재시작 여부 대기
+		recvByte = recv(clientSocket, recvData, sizeof(recvData), 0);
+
 	}
 
 }

@@ -3,6 +3,7 @@
 
 #include "Buffer_TriCol.h"
 #include "Buffer_RectCol.h"
+#include "Buffer_RectTex.h"
 #include "Renderer.h"
 #include "Transform.h"
 #include "Shader.h"

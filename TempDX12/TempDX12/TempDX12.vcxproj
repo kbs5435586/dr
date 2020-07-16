@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Base.h" />
     <ClInclude Include="Buffer_RectCol.h" />
+    <ClInclude Include="Buffer_RectTex.h" />
     <ClInclude Include="Buffer_TriCol.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Buffer_RectCol.cpp" />
+    <ClCompile Include="Buffer_RectTex.cpp" />
     <ClCompile Include="Buffer_TriCol.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />

@@ -17,7 +17,7 @@ HRESULT CScene_Logo::Ready_Scene()
 		return E_FAIL;
 	if(FAILED(Ready_Layer_Camera(L"Layer_Camera")))
 		return E_FAIL;
-	if(FAILED(Ready_Layer_Tri(L"Layer_Tri")))
+	if (FAILED(Ready_Layer_Tri(L"Layer_Tri")))
 		return E_FAIL;
 
 	//CDevice::GetInstance()->GetCommandList()->Close();
@@ -26,6 +26,7 @@ HRESULT CScene_Logo::Ready_Scene()
 
 _int CScene_Logo::Update_Scene(const _float& fTimeDelta)
 {
+
 	return CScene::Update_Scene(fTimeDelta);
 }
 

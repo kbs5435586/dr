@@ -30,7 +30,7 @@ using namespace std;
 #include <Mmsystem.h>
 #include <dxgi1_4.h>
 #include <dinput.h>
-
+#include <wincodec.h>
 
 
 #pragma comment(lib, "d3d12.lib")

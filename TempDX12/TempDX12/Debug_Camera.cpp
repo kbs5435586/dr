@@ -39,16 +39,6 @@ _int CDebug_Camera::Update_GameObject(const _float& fTimeDelta)
 	if (nullptr == m_pInput_Device)
 		return -1;
 
-	//if (m_pInput_Device->Get_DIKeyState(DIK_D) & 0x80)
-	//{
-	//	m_pTransform->Go_Right(fTimeDelta);
-	//}
-
-	//if (m_pInput_Device->Get_DIKeyState(DIK_A) & 0x80)
-	//{
-	//	m_pTransform->Go_Left(fTimeDelta);
-	//}
-
 	if (m_pInput_Device->Get_DIKeyState(DIK_W) & 0x80)
 	{
 		m_pTransform->Go_Straight(fTimeDelta);
@@ -57,8 +47,6 @@ _int CDebug_Camera::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_pTransform->BackWard(fTimeDelta);
 	}
-
-
 	if (m_pInput_Device->Get_DIKeyState(DIK_A) & 0x80)
 	{
 		m_pTransform->Go_Left(fTimeDelta);
@@ -68,7 +56,6 @@ _int CDebug_Camera::Update_GameObject(const _float& fTimeDelta)
 		m_pTransform->Go_Right(fTimeDelta);
 	}
 	_long	MouseMove = 0;
-
 	if (MouseMove = m_pInput_Device->Get_DIMouseMove(CInput::DIM_X))
 	{
 		m_pTransform->Rotation_Y(MouseMove * -fTimeDelta * 0.1f);

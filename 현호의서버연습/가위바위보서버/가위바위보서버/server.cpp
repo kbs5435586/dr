@@ -2,6 +2,8 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 
+#include "GameLogic.h"
+
 using namespace std;
 
 #pragma comment (lib,"ws2_32.lib")
@@ -81,6 +83,11 @@ int main()
 	// 4-2. 연결된 클라이언트에게 Hi send
 	send(clientSocket, sendData, strlen(sendData) + 1, 0);
 
+	SetGameTitle("가위 바위 보 게임 시작");
 
+	while (flow--)
+	{
+		itemServer=Input
+	}
 
 }

@@ -106,7 +106,17 @@ int main()
 
 		// 게임 재시작 여부 대기
 		recvByte = recv(clientSocket, recvData, sizeof(recvData), 0);
-
+		if (recvByte < 1)
+			break;
+		if (recvData[0] == 9)
+			break; // 게임 종료
 	}
+	// client socket 종료
+	closesocket(clientSocket);
+	// 5. 소켓 종료 -> 윈속 종료
+	closesocket(listenSocket);
+	WSACleanup();
 
+	system("pause");
+	return 0;
 }

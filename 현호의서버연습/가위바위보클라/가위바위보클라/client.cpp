@@ -69,4 +69,37 @@ int main()
 	int flow = 5;
 
 	srand((unsigned int)time(NULL));
+
+	while (flow--)
+	{
+		cout << "당신의 선택은? : ";
+		cin >> itemClient;
+		if (itemClient > 0 && itemClient < 4)
+		{
+			sendData[0] = itemClient;
+			// 자신이 낸 가바보를 서버로 보냄
+			send(hSocket, sendData, 1, 0);
+		}
+
+		// server의 가바보 정보 recv 대기
+		recvByte = recv(hSocket, recvData, sizeof(recvData), 0);
+		if (recvByte < 1)
+			break;
+		itemServer = recvData[0];
+		result = resultRock[itemClient][itemServer];
+
+		// 결과 화면 출력
+		
+		Sleep(2000);
+		sendData[0] = 1;
+		// server의 값을 client로 전송 처리
+		send(hSocket, sendData, 1, 0);
+	}
+
+	// 5. 소켓 종료 -> 윈속 종료
+	closesocket(hSocket);
+	WSACleanup();
+
+	system("pause");
+	return 0;
 }

@@ -45,9 +45,9 @@ int main()
 
 	// 4. 서버로부터 통신 대기
 	int recvSize;
-	int recvData[255];
-	int sendData[255];
-	recvSize = recv(hSocket, (char*)recvData, sizeof(recvData), 0);
+	char recvData[255];
+	char sendData[255];
+	recvSize = recv(hSocket, recvData, sizeof(recvData), 0);
 	if (recvSize == SOCKET_ERROR)
 		cout << "recv() Error " << endl;
 	cout << "recv : " << recvData << endl;
@@ -57,9 +57,9 @@ int main()
 	while (count--)
 	{
 		sendData[0] = count;
-		send(hSocket, (char*)sendData, 1, 0);
+		send(hSocket, sendData, 1, 0);
 		cout << "send data : " << sendData[0] << endl;
-		recvSize = recv(hSocket, (char*)recvData, sizeof(recvData), 0);
+		recvSize = recv(hSocket, recvData, sizeof(recvData), 0);
 		if (recvSize == SOCKET_ERROR)
 		{
 			cout << "recv() Error" << endl;

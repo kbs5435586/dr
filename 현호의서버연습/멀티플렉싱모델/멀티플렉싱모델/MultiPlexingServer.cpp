@@ -31,8 +31,8 @@ int main()
 	// 3. server 林家 binding 棺 listen socket
 	memset(&addrServer, 0, sizeof(addrServer));
 	addrServer.sin_family = AF_INET;
-	addrServer.sin_addr.s_addr = htonl(INADDR_ANY);
-	//inet_pton(AF_INET, "127.0.0.1", &addrServer.sin_addr);
+	//addrServer.sin_addr.s_addr = htonl(INADDR_ANY);
+	inet_pton(AF_INET, "127.0.0.1", &addrServer.sin_addr);
 	addrServer.sin_port = htons(30002);
 
 	if (bind(sockServer, (SOCKADDR*)&addrServer, sizeof(addrServer)))
@@ -100,7 +100,7 @@ int main()
 					
 					cout << i << " connected " << sockClient << "  " << addrClient.sin_addr.S_un.S_un_b.s_b1
 						<< " , " << addrClient.sin_addr.S_un.S_un_b.s_b2 << " , " << addrClient.sin_addr.S_un.S_un_b.s_b3
-						<< " , " << addrClient.sin_addr.S_un.S_un_b.s_b4 << " : " << addrClient.sin_port;
+						<< " , " << addrClient.sin_addr.S_un.S_un_b.s_b4 << " : " << addrClient.sin_port << endl;
 				}
 				else // client 牢 版快 recv 贸府
 				{

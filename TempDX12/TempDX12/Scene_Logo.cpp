@@ -19,14 +19,19 @@ HRESULT CScene_Logo::Ready_Scene()
 		return E_FAIL;
 	if (FAILED(Ready_Layer_Tri(L"Layer_Tri")))
 		return E_FAIL;
-
-	//CDevice::GetInstance()->GetCommandList()->Close();
 	return S_OK;
 }
 
 _int CScene_Logo::Update_Scene(const _float& fTimeDelta)
 {
+	m_fTempTime += fTimeDelta;
 
+	if (m_fTempTime >= 7.f)
+	{
+		if (FAILED(Ready_Layer_Tri(L"Layer_Tri")))
+			return E_FAIL;
+		m_fTempTime = 0.f;
+	}
 	return CScene::Update_Scene(fTimeDelta);
 }
 

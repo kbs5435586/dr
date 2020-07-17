@@ -121,6 +121,9 @@
     <Filter Include="97. Engine\01. Utility\02. Component\01. Component\00. VIBuffer\02. Buffer_RectTex">
       <UniqueIdentifier>{973ab3d8-ec73-4a12-93b0-befec34d9bf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\99. Default\01. TextureRect">
+      <UniqueIdentifier>{a2b6a496-5f95-43e1-b645-a8cefcd29253}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -234,6 +237,9 @@
     <ClInclude Include="Buffer_RectTex.h">
       <Filter>97. Engine\01. Utility\02. Component\01. Component\00. VIBuffer\02. Buffer_RectTex</Filter>
     </ClInclude>
+    <ClInclude Include="TextureRect.h">
+      <Filter>02. GameObject\99. Default\01. TextureRect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="TempDX12.ico">
@@ -333,9 +339,15 @@
     <ClCompile Include="Buffer_RectTex.cpp">
       <Filter>97. Engine\01. Utility\02. Component\01. Component\00. VIBuffer\02. Buffer_RectTex</Filter>
     </ClCompile>
+    <ClCompile Include="TextureRect.cpp">
+      <Filter>02. GameObject\99. Default\01. TextureRect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ShaderFiles\Shader_Default.hlsl">
+      <Filter>96. ShaderFiles</Filter>
+    </None>
+    <None Include="..\ShaderFiles\Shader_Texture.hlsl">
       <Filter>96. ShaderFiles</Filter>
     </None>
   </ItemGroup>

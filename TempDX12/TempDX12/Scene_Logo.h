@@ -22,5 +22,7 @@ public:
 	static CScene_Logo*		Create(ID3D12Device* pGraphic_Device);
 protected:
 	virtual void			Free();
+private:
+	_float					m_fTempTime = 0.f;
 };
 

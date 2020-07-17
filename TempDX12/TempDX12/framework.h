@@ -31,6 +31,7 @@ using namespace std;
 #include <dxgi1_4.h>
 #include <dinput.h>
 #include <wincodec.h>
+#include <time.h>
 
 
 #pragma comment(lib, "d3d12.lib")

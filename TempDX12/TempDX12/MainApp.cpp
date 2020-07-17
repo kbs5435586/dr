@@ -26,7 +26,7 @@ HRESULT CMainApp::Ready_MainApp()
 	if (FAILED(CInput::GetInstance()->Ready_Input_Device(g_hInstance, g_hWnd)))
 		return E_FAIL;
 
-
+	srand(unsigned(time(NULL)));
 	return S_OK;
 }
 

@@ -50,7 +50,7 @@ HRESULT CInput::Ready_Mouse(HWND hWnd)
 {
 	if (FAILED(m_pSDK->CreateDevice(GUID_SysMouse, &m_pMouse, nullptr)))
 		return E_FAIL;
-	if (FAILED(m_pMouse->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)))
+	if (FAILED(m_pMouse->SetCooperativeLevel(hWnd, DISCL_BACKGROUND | DISCL_NONEXCLUSIVE)))
 		return E_FAIL;
 	if (FAILED(m_pMouse->SetDataFormat(&c_dfDIMouse)))
 		return E_FAIL;

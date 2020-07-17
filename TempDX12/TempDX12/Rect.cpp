@@ -29,6 +29,9 @@ HRESULT CRect::Ready_GameObject()
 
 	m_pTransformCom->SetUp_Speed(30.f, XMConvertToRadians(30.f));
 	//m_pTransformCom->SetUp_RotationY(XMConvertToRadians(60));
+	int RandX = rand() % 10 + 1;
+	int RandY = rand() % 10 + 1;
+	int RandZ = rand() % 10 + 1;
 	m_pTransformCom->Set_StateInfo(CTransform::STATE_POSITION, &_vec3(0.f, 0.f, 0.f));
 	return S_OK;
 }
@@ -193,7 +196,7 @@ CRect* CRect::Create(ID3D12Device* pGraphic_Device)
 
 	if (FAILED(pInstance->Ready_Prototype()))
 	{
-		MessageBox(0, L"CBack_Logo Created Failed", L"System Error", MB_OK);
+		MessageBox(0, L"CRect Created Failed", L"System Error", MB_OK);
 		Safe_Release(pInstance);
 	}
 	return pInstance;

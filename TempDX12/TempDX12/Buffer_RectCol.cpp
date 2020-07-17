@@ -61,6 +61,14 @@ HRESULT CBuffer_RectCol::Ready_VIBuffer()
 			return E_FAIL;
 		memcpy(pVertexDataBegin, pVertices, sizeof(pVertices));
 		m_pVertexBuffer->Unmap(0, nullptr);
+
+
+		//m_pVertexBuffer = ::CreateBufferResource(m_pGraphic_Device, CDevice::GetInstance()->GetCommandList(), pVertices,
+		//	m_iStride * m_iVertices, D3D12_HEAP_TYPE_DEFAULT,
+		//	D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pVertexUploadBuffer);
+
+		//CDevice::GetInstance()->GetCommandList()->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_pVertexBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER));
+
 	}
 
 	
@@ -76,6 +84,10 @@ HRESULT CBuffer_RectCol::Ready_VIBuffer()
 			return E_FAIL;
 		memcpy(pIndexDataBegin, indicies, sizeof(indicies));
 		m_pIndexBuffer->Unmap(0, nullptr);
+
+		//m_pIndexBuffer = ::CreateBufferResource(CDevice::GetInstance()->GetDevice(), CDevice::GetInstance()->GetCommandList(), indicies,
+		//	sizeof(_uint) * m_iIndices, D3D12_HEAP_TYPE_DEFAULT,
+		//	D3D12_RESOURCE_STATE_INDEX_BUFFER, &m_pIndexUploadBuffer);
 	}
 
 

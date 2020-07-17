@@ -60,9 +60,11 @@ _int CDebug_Camera::Update_GameObject(const _float& fTimeDelta)
 	{
 		m_pTransform->Rotation_Y(MouseMove * -fTimeDelta * 0.1f);
 	}
+
+	
 	if (MouseMove = CInput::GetInstance()->Get_DIMouseMove(CInput::DIM_Y))
 	{
-		m_pTransform->Rotation_Axis(XMConvertToRadians((_float)MouseMove) * -fTimeDelta*2.f, m_pTransform->Get_StateInfo(CTransform::STATE_RIGHT));
+		m_pTransform->Rotation_Axis(XMConvertToRadians((_float)MouseMove) * -fTimeDelta*5.f, m_pTransform->Get_StateInfo(CTransform::STATE_RIGHT));
 	}
 
 

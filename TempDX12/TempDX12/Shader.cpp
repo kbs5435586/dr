@@ -42,7 +42,7 @@ HRESULT CShader::SetUp_OnShader(ID3D12PipelineState* pPipeline, _matrix matWorld
 {
 	CDevice::GetInstance()->GetCommandList()->SetGraphicsRootSignature(CDevice::GetInstance()->GetRootSignature());
 	CDevice::GetInstance()->GetCommandList()->SetPipelineState(pPipeline);
-
+	//CDevice::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable();
 	XMFLOAT4X4 xmf4x4World;
 	XMStoreFloat4x4(&xmf4x4World, XMMatrixTranspose(XMLoadFloat4x4(&matWorld)));
 	CDevice::GetInstance()->GetCommandList()->SetGraphicsRoot32BitConstants(0, 16, &xmf4x4World, 0);

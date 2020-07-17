@@ -211,6 +211,7 @@ void D3D12PipelineStateCache::LoadAssets()
         // We don't modify the SRV in the command list after SetGraphicsRootDescriptorTable
         // is executed on the GPU so we can use the default range behavior:
         // D3D12_DESCRIPTOR_RANGE_FLAG_DATA_STATIC_WHILE_SET_AT_EXECUTE
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         CD3DX12_DESCRIPTOR_RANGE1 ranges[RootParametersCount];
         ranges[RootParameterSRV].Init(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 

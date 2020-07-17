@@ -49,6 +49,7 @@ HRESULT CDevice::OnCreate()
 
 HRESULT CDevice::OnDestroy()
 {
+	WaitForGpuComplete();
 	CloseHandle(m_hFenceEvent);
 
 
@@ -108,6 +109,7 @@ HRESULT CDevice::OnDestroy()
 
 HRESULT CDevice::CreateDevice()
 {
+
 #if defined(_DEBUG)
 	D3D12GetDebugInterface(__uuidof(ID3D12Debug), (void**)&m_pDebugController);
 	m_pDebugController->EnableDebugLayer();
@@ -311,21 +313,6 @@ void CDevice::MoveToNextFrame()
 	}
 }
 
-HRESULT CDevice::WaitForPreviousFrame()
-{
-	m_iSwapChainBufferIdx = m_pSwapChain->GetCurrentBackBufferIndex();
-
-	if (m_pFence->GetCompletedValue() < m_iFenceValues[m_iSwapChainBufferIdx])
-	{
-		if (FAILED(m_pFence->SetEventOnCompletion(m_iFenceValues[m_iSwapChainBufferIdx], m_hFenceEvent)))
-			return E_FAIL;
-		WaitForSingleObject(m_hFenceEvent, INFINITE);
-	}
-
-	m_iFenceValues[m_iSwapChainBufferIdx]++;
-	return S_OK;
-}
-
 HRESULT CDevice::CreateRootSignature()
 {
 	D3D12_ROOT_PARAMETER pd3dRootParameters[2];
@@ -359,9 +346,9 @@ HRESULT CDevice::CreateRootSignature()
 	ID3DBlob* pd3dErrorBlob = NULL;
 	::D3D12SerializeRootSignature(&d3dRootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1,
 		&pd3dSignatureBlob, &pd3dErrorBlob);
+
 	if (FAILED(CDevice::GetInstance()->GetDevice()->CreateRootSignature(0, pd3dSignatureBlob->GetBufferPointer(),
-		pd3dSignatureBlob->GetBufferSize(), __uuidof(ID3D12RootSignature), (void
-			**)&m_pRootSignature)))
+		pd3dSignatureBlob->GetBufferSize(), __uuidof(ID3D12RootSignature), (void**)&m_pRootSignature)))
 		return E_FAIL;
 
 	return S_OK;
@@ -399,11 +386,12 @@ void CDevice::Begin()
 
 	m_pCommandList->RSSetViewports(1, &m_ViewPort);
 	m_pCommandList->RSSetScissorRects(1, &m_ScissorRect);
-
+	PIXBeginEvent(m_pCommandList, 0, L"Draw cube");
 }
 
 void CDevice::End()
 {
+	PIXEndEvent(m_pCommandList);
 	m_pCommandList->ResourceBarrier(1,
 		&CD3DX12_RESOURCE_BARRIER::Transition(m_pRenderTargetBuffers[m_iSwapChainBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 

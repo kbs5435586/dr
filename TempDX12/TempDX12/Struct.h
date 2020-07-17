@@ -8,12 +8,27 @@ typedef struct tagVertexCol
 	{
 
 	}
-	tagVertexCol(XMFLOAT3 xmf3Position, XMFLOAT4 xmf4Diffuse)
+	tagVertexCol(XMFLOAT3 vPos, XMFLOAT4 vColor_)
 	{
-		vPosition = xmf3Position;
-		vColor = xmf4Diffuse;
+		vPosition = vPos;
+		vColor = vColor_;
 	}
 }VTXCOL;
+
+typedef struct tagVertexTex
+{
+	XMFLOAT3 vPosition;
+	XMFLOAT2 vTex;
+	tagVertexTex()
+	{
+
+	}
+	tagVertexTex(XMFLOAT3 vPos, XMFLOAT2 vTex_)
+	{
+		vPosition = vPos;
+		vTex = vTex_;
+	}
+}VTXTEX;
 
 typedef struct tagCamera_Desc
 {

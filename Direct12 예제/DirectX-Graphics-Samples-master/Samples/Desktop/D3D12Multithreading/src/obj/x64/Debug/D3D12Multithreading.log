@@ -1,0 +1,14 @@
+﻿  Performing Custom Build Tools
+  Performing Custom Build Tools
+cl : 명령줄 warning D9035: 'Gm' 옵션은 더 이상 사용되지 않으므로 이후 릴리스에서 제거될 예정입니다.
+  stdafx.cpp
+cl : 명령줄 warning D9035: 'Gm' 옵션은 더 이상 사용되지 않으므로 이후 릴리스에서 제거될 예정입니다.
+  Main.cpp
+  FrameResource.cpp
+  DXSample.cpp
+  D3D12Multithreading.cpp
+C:\Users\User\Desktop\TempDX12\dr\Direct12 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12Multithreading\src\D3D12Multithreading.cpp(699,29): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Camera.cpp
+  Win32Application.cpp
+  코드를 생성하고 있습니다...
+  D3D12Multithreading.vcxproj -> C:\Users\User\Desktop\TempDX12\dr\Direct12 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12Multithreading\src\bin\x64\Debug\D3D12Multithreading.exe

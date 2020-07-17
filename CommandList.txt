@@ -13,3 +13,9 @@ CommandList Create-> CreateBuffer ->Close ->Reset ->Render->Close(이 방법은 
 Create CommandList -> Create Resource -> CommandList Close -> CommandList Execute -> CommandList Reset -> Rendering -> CommandList Close
 
 Create CommandList -> CommandList Close -> CommandList Reset -> Create Resource -> Command List Close -> CommandList Excute -> Command List Reset -> Rendering ->CommandList Close
+
+
+할일
+Root Parameter rebinding
+Shader Resource View 
+Texturing

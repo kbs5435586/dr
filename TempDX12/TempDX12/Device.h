@@ -21,8 +21,6 @@ public:
 	void						WaitForGpuComplete();
 	void						MoveToNextFrame();
 public:
-	HRESULT						WaitForPreviousFrame();
-public:
 	HRESULT						CreateRootSignature();
 public:
 	ID3D12Device*				GetDevice() { return m_pDevice; }

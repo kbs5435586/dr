@@ -370,6 +370,15 @@ bool InitD3D()
 
 	// create a descriptor range (descriptor table) and fill it out
 	// this is a range of descriptors inside a descriptor heap
+
+
+
+
+
+
+
+
+	///
 	D3D12_DESCRIPTOR_RANGE  descriptorTableRanges[1]; // only one range right now
 	descriptorTableRanges[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; // this is a range of shader resource views (descriptors)
 	descriptorTableRanges[0].NumDescriptors = 1; // we only have one texture right now, so the range is only 1

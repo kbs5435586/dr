@@ -61,7 +61,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
 
     // For.Frame_60
-    if (FAILED(pSystem->Add_Frame(L"Frame_60", 60.f)))
+    if (FAILED(pSystem->Add_Frame(L"Frame_60", 500.f)))
         return FALSE;
     // 기본 메시지 루프입니다:
     while (1)
@@ -171,6 +171,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_KEYDOWN:
+        if(wParam == 'Q')
+            PostQuitMessage(0);
+        break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);

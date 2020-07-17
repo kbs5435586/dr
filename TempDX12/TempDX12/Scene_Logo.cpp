@@ -19,6 +19,8 @@ HRESULT CScene_Logo::Ready_Scene()
 		return E_FAIL;
 	if (FAILED(Ready_Layer_Tri(L"Layer_Tri")))
 		return E_FAIL;
+
+	//CDevice::GetInstance()->TempEnd();
 	return S_OK;
 }
 

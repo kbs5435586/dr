@@ -87,6 +87,7 @@ HRESULT CRect::CreatePipeLine(CShader* pShader)
 	if (FAILED(CDevice::GetInstance()->GetDevice()->CreateGraphicsPipelineState(&d3dPipelineStateDesc,
 		__uuidof(ID3D12PipelineState), (void**)&m_pPipeLine)))
 		return E_FAIL;
+	m_pPipeLine->SetName(L"PipeLine");
 	CDevice::GetInstance()->GetVecPipeLine().push_back(m_pPipeLine);
 
 	if (d3dPipelineStateDesc.InputLayout.pInputElementDescs)

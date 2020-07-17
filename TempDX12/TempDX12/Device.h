@@ -21,6 +21,8 @@ public:
 	void						WaitForGpuComplete();
 	void						MoveToNextFrame();
 public:
+	HRESULT						WaitForPreviousFrame();
+public:
 	HRESULT						CreateRootSignature();
 public:
 	ID3D12Device*				GetDevice() { return m_pDevice; }
@@ -39,12 +41,11 @@ public:
 public:
 	D3D12_VIEWPORT				GetViewPort() { return m_ViewPort; }
 public:
+	void						Open();
+	void						Close();
+public:
 	void						Begin();
 	void						End();
-public:
-	void						TempBegin();
-	void						TempEnd();
-	void						TempUpdate(CRenderer* pRenderer);
 private:
 	_bool						m_bMsaaEnalbe = false;
 	_uint						m_iMsaaQualityLv = 0;
@@ -57,8 +58,8 @@ private:
 	IDXGISwapChain3*			m_pSwapChain = nullptr;
 	ID3D12Device*				m_pDevice = nullptr;
 	ID3D12Resource*				m_pRenderTargetBuffers[m_iSwapchainBuffer] = {nullptr};
-	ID3D12DescriptorHeap*		m_pRtvDescriptorHeap = nullptr;
 	ID3D12Resource*				m_pDepthStencilBuffer = nullptr;
+	ID3D12DescriptorHeap*		m_pRtvDescriptorHeap = nullptr;
 	ID3D12DescriptorHeap*		m_pDsvDescriptorHeap = nullptr;
 	ID3D12CommandQueue*			m_pCommandQueue = nullptr;
 	ID3D12CommandAllocator*		m_pCommandAllocator = nullptr;

@@ -35,6 +35,7 @@ _int CMainApp::Update_MainApp(const _float& fTimeDelta)
 	if (nullptr == m_pManagement)
 		return -1;
 	m_fTimeAcc += fTimeDelta;
+	CInput::GetInstance()->SetUp_InputState();
 	return m_pManagement->Update_Management(fTimeDelta);
 }
 
@@ -43,15 +44,15 @@ void CMainApp::Render_MainApp()
 	if (nullptr == m_pManagement)
 		return;
 
-	//m_pDevice->Begin();
+	m_pDevice->Begin();
 
 	m_pManagement->Render_Management();
-	CInput::GetInstance()->SetUp_InputState();
-	//if (nullptr != m_pRenderer)
-	//	m_pRenderer->Render_RenderGroup();
 
-	m_pDevice->TempUpdate(m_pRenderer);
-	//m_pDevice->End();
+	if (nullptr != m_pRenderer)
+		m_pRenderer->Render_RenderGroup();
+
+	//m_pDevice->TempUpdate(m_pRenderer);
+	m_pDevice->End();
 	ComputeFrame();
 }
 

@@ -58,7 +58,7 @@ _int CDebug_Camera::Update_GameObject(const _float& fTimeDelta)
 	_long	MouseMove = 0;
 	if (MouseMove = m_pInput_Device->Get_DIMouseMove(CInput::DIM_X))
 	{
-		m_pTransform->Rotation_Y(MouseMove * -fTimeDelta * 0.1f);
+		m_pTransform->Rotation_Y(MouseMove * fTimeDelta * 0.1f);
 	}
 
 	

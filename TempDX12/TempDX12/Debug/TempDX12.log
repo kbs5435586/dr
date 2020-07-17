@@ -1,4 +1,7 @@
-﻿  Buffer_RectCol.cpp
-  Device.cpp
+﻿  Base.cpp
+  Buffer_RectCol.cpp
+  Buffer_RectTex.cpp
+  Scene.cpp
+  VIBuffer.cpp
   코드를 생성하고 있습니다...
   TempDX12.vcxproj -> C:\Users\User\Desktop\TempDX12\dr\TempDX12\Debug\TempDX12.exe

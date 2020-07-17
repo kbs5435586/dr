@@ -49,47 +49,44 @@ HRESULT CBuffer_RectCol::Ready_VIBuffer()
 	indicies[30] = 0; indicies[31] = 1; indicies[32] = 2;
 	indicies[33] = 0; indicies[34] = 2; indicies[35] = 3;
 
+	CDevice::GetInstance()->Open();
 	{
-		UINT8* pVertexDataBegin;
+		if (FAILED(m_pGraphic_Device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+			D3D12_HEAP_FLAG_NONE,&CD3DX12_RESOURCE_DESC::Buffer(sizeof(pVertices)), D3D12_RESOURCE_STATE_COPY_DEST, nullptr,IID_PPV_ARGS(&m_pVertexBuffer))))
+			return E_FAIL;
+		m_pVertexBuffer->SetName(L"VertexBuffer");
 		if (FAILED(m_pGraphic_Device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-			D3D12_HEAP_FLAG_NONE,&CD3DX12_RESOURCE_DESC::Buffer(sizeof(pVertices)),D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,IID_PPV_ARGS(&m_pVertexBuffer))))
+			D3D12_HEAP_FLAG_NONE, &CD3DX12_RESOURCE_DESC::Buffer(sizeof(pVertices)), D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_pVertexUploadBuffer))))
 			return E_FAIL;
+		m_pVertexUploadBuffer->SetName(L"Upload VertexBuffer");
 
-		CD3DX12_RANGE readRange(0, 0);
-		if (FAILED(m_pVertexBuffer->Map(0, &readRange, reinterpret_cast<void**>(&pVertexDataBegin))))
-			return E_FAIL;
-		memcpy(pVertexDataBegin, pVertices, sizeof(pVertices));
-		m_pVertexBuffer->Unmap(0, nullptr);
+		D3D12_SUBRESOURCE_DATA vertexData = {};
+		vertexData.pData = reinterpret_cast<BYTE*>(pVertices); 
+		vertexData.RowPitch = sizeof(pVertices);
+		vertexData.SlicePitch = sizeof(pVertices);
 
-
-		//m_pVertexBuffer = ::CreateBufferResource(m_pGraphic_Device, CDevice::GetInstance()->GetCommandList(), pVertices,
-		//	m_iStride * m_iVertices, D3D12_HEAP_TYPE_DEFAULT,
-		//	D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, &m_pVertexUploadBuffer);
-
-		//CDevice::GetInstance()->GetCommandList()->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_pVertexBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER));
-
+		UpdateSubresources(CDevice::GetInstance()->GetCommandList(), m_pVertexBuffer, m_pVertexUploadBuffer, 0, 0, 1, &vertexData);
+		CDevice::GetInstance()->GetCommandList()->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_pVertexBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER));
 	}
-
-	
 	{
-		UINT8* pIndexDataBegin;
+		if (FAILED(m_pGraphic_Device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+			D3D12_HEAP_FLAG_NONE,&CD3DX12_RESOURCE_DESC::Buffer(sizeof(indicies)), D3D12_RESOURCE_STATE_COPY_DEST, nullptr,IID_PPV_ARGS(&m_pIndexBuffer))))
+			return E_FAIL;
+		m_pIndexBuffer->SetName(L"IndexBuffer");
 		if (FAILED(m_pGraphic_Device->CreateCommittedResource(&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-			D3D12_HEAP_FLAG_NONE,&CD3DX12_RESOURCE_DESC::Buffer(sizeof(indicies)),D3D12_RESOURCE_STATE_GENERIC_READ,
-			nullptr,IID_PPV_ARGS(&m_pIndexBuffer))))
+			D3D12_HEAP_FLAG_NONE, &CD3DX12_RESOURCE_DESC::Buffer(sizeof(indicies)), D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_pIndexUploadBuffer))))
 			return E_FAIL;
+		m_pIndexUploadBuffer->SetName(L"Upload IndexBuffer");
 
-		CD3DX12_RANGE readRange(0, 0);
-		if (FAILED(m_pIndexBuffer->Map(0, &readRange, reinterpret_cast<void**>(&pIndexDataBegin))))
-			return E_FAIL;
-		memcpy(pIndexDataBegin, indicies, sizeof(indicies));
-		m_pIndexBuffer->Unmap(0, nullptr);
+		D3D12_SUBRESOURCE_DATA indexData = {};
+		indexData.pData = reinterpret_cast<BYTE*>(indicies);
+		indexData.RowPitch = sizeof(indicies); 
+		indexData.SlicePitch = sizeof(indicies);
 
-		//m_pIndexBuffer = ::CreateBufferResource(CDevice::GetInstance()->GetDevice(), CDevice::GetInstance()->GetCommandList(), indicies,
-		//	sizeof(_uint) * m_iIndices, D3D12_HEAP_TYPE_DEFAULT,
-		//	D3D12_RESOURCE_STATE_INDEX_BUFFER, &m_pIndexUploadBuffer);
+		UpdateSubresources(CDevice::GetInstance()->GetCommandList(), m_pIndexBuffer, m_pIndexUploadBuffer, 0, 0, 1, &indexData);
+		CDevice::GetInstance()->GetCommandList()->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_pIndexBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER));
 	}
-
+		CDevice::GetInstance()->Close();
 
 	m_VertexBufferView.BufferLocation = m_pVertexBuffer->GetGPUVirtualAddress();
 	m_VertexBufferView.StrideInBytes = m_iStride;

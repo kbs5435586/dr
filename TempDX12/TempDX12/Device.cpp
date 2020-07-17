@@ -34,18 +34,31 @@ HRESULT CDevice::OnCreate()
 	if (FAILED(CreateRootSignature()))
 		return E_FAIL;
 
-
+	m_pDevice->SetName(L"Graphic_Device");
+	for (int i = 0; i < m_iSwapchainBuffer; ++i)
+		m_pRenderTargetBuffers[i]->SetName(L"Render Target Buffer");
+	m_pDepthStencilBuffer->SetName(L"Depth Stencil Buffer");
+	m_pRtvDescriptorHeap->SetName(L"Render Target View Descriptor Heap");
+	m_pDsvDescriptorHeap->SetName(L"Depth Stencil View Descriptor Heap");
+	m_pCommandAllocator->SetName(L"Command Allocator");
 	m_pCommandQueue->SetName(L"CommandQueue");
+	m_pCommandList->SetName(L"CommandList");
+	m_pRootSignature->SetName(L"RootSignature");
 	return S_OK;
 }
 
 HRESULT CDevice::OnDestroy()
 {
 	CloseHandle(m_hFenceEvent);
-#if defined(_DEBUG)
-	if (m_pDebugController)
-		m_pDebugController->Release();
-#endif
+
+
+	if (m_pDepthStencilBuffer)
+		m_pDepthStencilBuffer->Release();
+
+	if (m_pDsvDescriptorHeap)
+		m_pDsvDescriptorHeap->Release();
+
+
 	for (int i = 0; i < m_iSwapchainBuffer; ++i)
 	{
 		if (m_pRenderTargetBuffers[i])
@@ -53,32 +66,43 @@ HRESULT CDevice::OnDestroy()
 	}
 	if (m_pRtvDescriptorHeap)
 		m_pRtvDescriptorHeap->Release();
-	if (m_pDepthStencilBuffer)
-		m_pDepthStencilBuffer->Release();
-	if (m_pDsvDescriptorHeap)
-		m_pDsvDescriptorHeap->Release();
+
+
 
 	for (size_t i = 0; i < m_vecPipeline.size(); ++i)
 	{
 		m_vecPipeline[i]->Release();
 	}
+
 	if (m_pRootSignature)
 		m_pRootSignature->Release();
+
 	if (m_pCommandAllocator)
 		m_pCommandAllocator->Release();
+
 	if (m_pCommandQueue)
 		m_pCommandQueue->Release();
+
 	if (m_pCommandList)
 		m_pCommandList->Release();
+
 	if (m_pFence)
 		m_pFence->Release();
+
 	m_pSwapChain->SetFullscreenState(FALSE, nullptr);
 	if (m_pSwapChain)
 		m_pSwapChain->Release();
+
 	if (m_pDevice)
 		m_pDevice->Release();
+
 	if (m_pFactory)
 		m_pFactory->Release();
+
+#if defined(_DEBUG)
+	if (m_pDebugController)
+		m_pDebugController->Release();
+#endif
 	return S_OK;
 }
 
@@ -147,8 +171,7 @@ HRESULT CDevice::CreateCommandQueueAndList()
 	if (FAILED(m_pDevice->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_pCommandAllocator, nullptr, __uuidof(ID3D12CommandList), (void**)&m_pCommandList)))
 		return E_FAIL;
 
-	if (FAILED(m_pCommandList->Close()))
-		return E_FAIL;
+	Close();
 
 	return S_OK;
 }
@@ -277,7 +300,7 @@ void CDevice::WaitForGpuComplete()
 void CDevice::MoveToNextFrame()
 {
 	m_iSwapChainBufferIdx = m_pSwapChain->GetCurrentBackBufferIndex();
-	/*_uint nFenceValue = ++m_iFenceValues[m_iSwapChainBufferIdx];
+	_uint nFenceValue = ++m_iFenceValues[m_iSwapChainBufferIdx];
 	if (FAILED(m_pCommandQueue->Signal(m_pFence, nFenceValue)))
 		return;
 	if (m_pFence->GetCompletedValue() < nFenceValue)
@@ -285,7 +308,22 @@ void CDevice::MoveToNextFrame()
 		if (FAILED(m_pFence->SetEventOnCompletion(nFenceValue, m_hFenceEvent)))
 			return;
 		WaitForSingleObject(m_hFenceEvent, INFINITE);
-	}*/
+	}
+}
+
+HRESULT CDevice::WaitForPreviousFrame()
+{
+	m_iSwapChainBufferIdx = m_pSwapChain->GetCurrentBackBufferIndex();
+
+	if (m_pFence->GetCompletedValue() < m_iFenceValues[m_iSwapChainBufferIdx])
+	{
+		if (FAILED(m_pFence->SetEventOnCompletion(m_iFenceValues[m_iSwapChainBufferIdx], m_hFenceEvent)))
+			return E_FAIL;
+		WaitForSingleObject(m_hFenceEvent, INFINITE);
+	}
+
+	m_iFenceValues[m_iSwapChainBufferIdx]++;
+	return S_OK;
 }
 
 HRESULT CDevice::CreateRootSignature()
@@ -329,113 +367,53 @@ HRESULT CDevice::CreateRootSignature()
 	return S_OK;
 }
 
+void CDevice::Open()
+{
+	CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0);
+}
+
+void CDevice::Close()
+{
+	CDevice::GetInstance()->GetCommandList()->Close();
+	ID3D12CommandList* ppd3dCommandLists[] = { CDevice::GetInstance()->GetCommandList() };
+	CDevice::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, ppd3dCommandLists);
+}
+
 void CDevice::Begin()
 {
 	CDevice::GetInstance()->GetCommandAllocator()->Reset();
-	if(FAILED(CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0)))
-		return;
+	Open();
+
+	m_pCommandList->ResourceBarrier(1,
+		&CD3DX12_RESOURCE_BARRIER::Transition(m_pRenderTargetBuffers[m_iSwapChainBufferIdx], D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET));
+
+	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_pRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), m_iSwapChainBufferIdx, m_iDsvDescriptorIncrementSize);
+	CD3DX12_CPU_DESCRIPTOR_HANDLE dsvHandle(m_pDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+
+
+
+	m_pCommandList->OMSetRenderTargets(1, &rtvHandle, FALSE, &dsvHandle);
+	float pfClearColor[4] = { 0.f, 0.f, 1.f, 1.f };
+	m_pCommandList->ClearRenderTargetView(rtvHandle, pfClearColor, 0, NULL);
+	m_pCommandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, NULL);
 
 	m_pCommandList->RSSetViewports(1, &m_ViewPort);
 	m_pCommandList->RSSetScissorRects(1, &m_ScissorRect);
-	D3D12_RESOURCE_BARRIER Resource_Barrier;
-	ZeroMemory(&Resource_Barrier, sizeof(D3D12_RESOURCE_BARRIER));
-
-	Resource_Barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	Resource_Barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	Resource_Barrier.Transition.pResource = m_pRenderTargetBuffers[m_iSwapChainBufferIdx];
-	Resource_Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-	Resource_Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	Resource_Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	CDevice::GetInstance()->GetCommandList()->ResourceBarrier(1, &Resource_Barrier);
-
-
-	D3D12_CPU_DESCRIPTOR_HANDLE RtvCPUDescriptorHandle = m_pRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	RtvCPUDescriptorHandle.ptr += (m_iSwapChainBufferIdx * m_iRtvDescriptorIncrementSize);
-	D3D12_CPU_DESCRIPTOR_HANDLE DsvCPUDescriptorHandle = m_pDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	CDevice::GetInstance()->GetCommandList()->OMSetRenderTargets(1, &RtvCPUDescriptorHandle, FALSE, &DsvCPUDescriptorHandle);
-
-	float pfClearColor[4] = { 0.f, 0.f, 1.f, 1.f };
-	CDevice::GetInstance()->GetCommandList()->ClearRenderTargetView(RtvCPUDescriptorHandle, pfClearColor, 0, NULL);
-	CDevice::GetInstance()->GetCommandList()->ClearDepthStencilView(DsvCPUDescriptorHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, NULL);
-
 
 }
 
 void CDevice::End()
 {
-	D3D12_RESOURCE_BARRIER Resource_Barrier;
-	ZeroMemory(&Resource_Barrier, sizeof(D3D12_RESOURCE_BARRIER));
-
-	Resource_Barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	Resource_Barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	Resource_Barrier.Transition.pResource = m_pRenderTargetBuffers[m_iSwapChainBufferIdx];
-	Resource_Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	Resource_Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-	Resource_Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	CDevice::GetInstance()->GetCommandList()->ResourceBarrier(1, &Resource_Barrier);
+	m_pCommandList->ResourceBarrier(1,
+		&CD3DX12_RESOURCE_BARRIER::Transition(m_pRenderTargetBuffers[m_iSwapChainBufferIdx], D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
 
-	CDevice::GetInstance()->GetCommandList()->Close();
-	ID3D12CommandList* ppd3dCommandLists[] = { CDevice::GetInstance()->GetCommandList() };
-	CDevice::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, ppd3dCommandLists);
+	Close();
 
 	WaitForGpuComplete();
 	m_pSwapChain->Present(0, 0);
 	MoveToNextFrame();
-}
 
-void CDevice::TempBegin()
-{
-	CDevice::GetInstance()->GetCommandList()->Reset(CDevice::GetInstance()->GetCommandAllocator(), 0);
-}
-
-void CDevice::TempEnd()
-{
-	CDevice::GetInstance()->GetCommandList()->Close();
-	ID3D12CommandList* ppd3dCommandLists[] = { CDevice::GetInstance()->GetCommandList() };
-	CDevice::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, ppd3dCommandLists);
-}
-
-void CDevice::TempUpdate(CRenderer* pRenderer)
-{
-	
-	TempBegin();
-
-	m_pCommandList->RSSetViewports(1, &m_ViewPort);
-	m_pCommandList->RSSetScissorRects(1, &m_ScissorRect);
-	D3D12_RESOURCE_BARRIER Resource_Barrier;
-	ZeroMemory(&Resource_Barrier, sizeof(D3D12_RESOURCE_BARRIER));
-
-	Resource_Barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	Resource_Barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	Resource_Barrier.Transition.pResource = m_pRenderTargetBuffers[m_iSwapChainBufferIdx];
-	Resource_Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-	Resource_Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	Resource_Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	m_pCommandList->ResourceBarrier(1, &Resource_Barrier);
-	D3D12_CPU_DESCRIPTOR_HANDLE RtvCPUDescriptorHandle = m_pRtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	RtvCPUDescriptorHandle.ptr += (m_iSwapChainBufferIdx * m_iRtvDescriptorIncrementSize);
-	D3D12_CPU_DESCRIPTOR_HANDLE DsvCPUDescriptorHandle = m_pDsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	m_pCommandList->OMSetRenderTargets(1, &RtvCPUDescriptorHandle, FALSE, &DsvCPUDescriptorHandle);
-	float pfClearColor[4] = { 0.f, 0.f, 1.f, 1.f };
-	m_pCommandList->ClearRenderTargetView(RtvCPUDescriptorHandle, pfClearColor, 0, NULL);
-	m_pCommandList->ClearDepthStencilView(DsvCPUDescriptorHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, NULL);
-
-	pRenderer->Render_RenderGroup();
-
-
-	Resource_Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	Resource_Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-	Resource_Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
-	m_pCommandList->ResourceBarrier(1, &Resource_Barrier);
-
-
-	TempEnd();
-
-
-	WaitForGpuComplete();
-	m_pSwapChain->Present(0, 0);
-	MoveToNextFrame();
 }
 
 void CDevice::Free()

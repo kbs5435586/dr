@@ -10,7 +10,7 @@
 
 using namespace std;
 
-unsigned int __stdcall ThreadFunc(void* _pArgs)
+unsigned int __stdcall ThreadFunc(void* _pArgs) // ≈¨∂Û¿”
 {
 	int recvByte;
 	char recvData[255];
@@ -75,12 +75,13 @@ int main()
 	cout << "start recv thread" << endl;
 
 	char chat[255];
-	int chatSize = 0;
+	int chatSize;
 	while (true)
 	{
 		scanf_s("%s", chat, (unsigned)sizeof(chat));
 		if (strcmp(chat, "exit") == 0)
 			break;
+		chatSize = strnlen_s(chat, sizeof(chat));
 		if (chatSize > 0)
 			send(hSocket, chat, chatSize, 0);
 	}

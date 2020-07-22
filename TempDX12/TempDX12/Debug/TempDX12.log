@@ -1,1 +1,61 @@
-﻿  TempDX12.vcxproj -> C:\Users\User\Desktop\TempDX12\dr\TempDX12\Debug\TempDX12.exe
+﻿  Base.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Buffer_RectCol.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Buffer_RectTex.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Buffer_TriCol.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Camera.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Component.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Component_Manager.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Debug_Camera.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Device.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Frame.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  FrameManager.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  GameObject.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  GameObject_Manager.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Input.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Layer.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  MainApp.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Management.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Rect.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Renderer.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Scene.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Scene_Logo.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Shader.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  System.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  TempDX12.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  TextureRect.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Timer.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  TimerManager.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  Transform.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  VIBuffer.cpp
+C:\Users\User\Desktop\TempDX12\dr\TempDX12\TempDX12\framework.h(36,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'QDir': No such file or directory
+  코드를 생성하고 있습니다...

@@ -55,7 +55,7 @@ int main()
 	SOCKET clientSocket;
 	int sizeClientAddr = sizeof(clientAddr);
 	char sendData[255] = "Hi !";
-	int recvData[255];
+	char recvData[255];
 	char recvByte;
 	int recvCount = 0;
 
@@ -75,16 +75,16 @@ int main()
 
 		// 4-3 접속한 client가 접속을 끊을때까지 recv 대기를 반복한다.
 		cout << "recv count : ";
-		while ((recvByte = recv(clientSocket, (char*)recvData, sizeof(recvData), 0)) > 0)
+		while ((recvByte = recv(clientSocket, recvData, sizeof(recvData), 0)) > 0)
 		{
 			// 받은걸 그대로 보낸다
 			cout << ++recvCount << " ";
-			send(clientSocket, (char*)recvData, recvByte, 0);
+			send(clientSocket, recvData, recvByte, 0);
 		}
 		// 4-4 접속이 끊긴 처리
 		cout << endl;
 		closesocket(clientSocket);
-		cout << "close socket : " << clientSocket;
+		cout << "close socket : " << clientSocket << endl;
 	}
 
 	closesocket(listenSocket);

@@ -28,15 +28,18 @@ int main()
 	serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
 	serverAddress.sin_port = htons(30002);
 
-	if (bind(Socket, (SOCKADDR*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR)
+	if (bind(Socket, (SOCKADDR*)&serverAddress, sizeof(serverAddress)) == SOCKET_ERROR) // 소켓에 주소룰 연결시켜줌 
 		cout << "Binding Error" << endl;
-	if (listen(Socket, 5) == SOCKET_ERROR)
+	if (listen(Socket, 5) == SOCKET_ERROR) // 클라이언트로부터 접속을 받을 수 있는 소켓으로 만들어줌 (소켓, 동시에 처리할 수 있는 숫자)
 		cout << "listen Error" << endl;
+	// 클라에서의 소켓 : 접속을 목적으로 만든 소켓
+	// 서버에서의 소켓 : 받기 위한 소켓 (listen)
 
 	// 3.2 클라이언트 연결 대기
 	SOCKADDR_IN clientAddr;
 	SOCKET clientSocket;
 	int sizeCliAddr = sizeof(clientAddr);
+
 	clientSocket = accept(Socket, (SOCKADDR*)&clientAddr, &sizeCliAddr);
 	if (clientSocket == SOCKET_ERROR)
 		cout << "Failed accept()" << endl;

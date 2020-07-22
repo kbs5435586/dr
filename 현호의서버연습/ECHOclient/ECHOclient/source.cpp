@@ -58,14 +58,14 @@ int main()
 	{
 		sendData[0] = count;
 		send(hSocket, sendData, 1, 0);
-		cout << "send data : " << sendData[0] << endl;
+		cout << "send data : " << (int)sendData[0] << endl;
 		recvSize = recv(hSocket, recvData, sizeof(recvData), 0);
 		if (recvSize == SOCKET_ERROR)
 		{
 			cout << "recv() Error" << endl;
 			break;
 		}
-		cout << "recv Data : " << recvData[0] << endl;
+		cout << "recv Data : " << (int)recvData[0] << endl;
 	}
 
 	// 5. 소켓 종료

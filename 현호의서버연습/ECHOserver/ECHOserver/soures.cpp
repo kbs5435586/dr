@@ -60,7 +60,7 @@ int main()
 	int recvCount = 0;
 
 	// 4. 접속이 시도된 클라이언트 연결과 통신 처리
-	while (true)
+	while (1)
 	{
 		// 4-1 클라이언트 연결 기다리기
 		clientSocket = accept(listenSocket, (SOCKADDR*)&clientAddr, &sizeClientAddr);
@@ -78,7 +78,7 @@ int main()
 		while ((recvByte = recv(clientSocket, recvData, sizeof(recvData), 0)) > 0)
 		{
 			// 받은걸 그대로 보낸다
-			cout << ++recvCount << " ";
+			cout << "["<< ++recvCount << "]" << (int)recvData[0] << " ";
 			send(clientSocket, recvData, recvByte, 0);
 		}
 		// 4-4 접속이 끊긴 처리

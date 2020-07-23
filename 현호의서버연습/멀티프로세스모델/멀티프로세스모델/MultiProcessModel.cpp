@@ -21,7 +21,7 @@ unsigned int __stdcall ThreadFunc(void* _pArgs) // 클라임
 	{
 		// 받은걸 그대로 보낸다.
 		recvData[recvByte] = NULL;
-		cout << "recv 채팅 : " << recvData << endl;
+		cout << "수신 채팅 : " << recvData << endl;
 	}
 
 	cout << "close Thread" << endl;

@@ -7,8 +7,9 @@ cl : 명령줄 warning D9035: 'Gm' 옵션은 더 이상 사용되지 않으므�
   FrameResource.cpp
   DXSample.cpp
   D3D12Multithreading.cpp
-C:\Users\User\Desktop\TempDX12\dr\Direct12 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12Multithreading\src\D3D12Multithreading.cpp(699,29): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\DownLoad\TempDr\Direct 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12Multithreading\src\D3D12Multithreading.cpp(699,29): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Camera.cpp
   Win32Application.cpp
   코드를 생성하고 있습니다...
-  D3D12Multithreading.vcxproj -> C:\Users\User\Desktop\TempDX12\dr\Direct12 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12Multithreading\src\bin\x64\Debug\D3D12Multithreading.exe
+LINK : fatal error LNK1104: 'WinPixEventRuntime.lib' 파일을 열 수 없습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(861,5): error MSB6006: "link.exe"이(가) 종료되었습니다(코드: 1104).

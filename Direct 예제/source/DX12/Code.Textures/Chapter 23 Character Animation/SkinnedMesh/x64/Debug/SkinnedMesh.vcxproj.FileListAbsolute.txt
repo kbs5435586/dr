@@ -1,0 +1,2 @@
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 23 Character Animation\SkinnedMesh\x64\Debug\SkinnedMesh.exe
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 23 Character Animation\SkinnedMesh\x64\Debug\SkinnedMesh.pdb

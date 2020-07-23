@@ -34,7 +34,6 @@ HRESULT CRect::Ready_GameObject()
 
 _int CRect::Update_GameObject(const _float& fTimeDelta)
 {
-
 	return _int();
 }
 

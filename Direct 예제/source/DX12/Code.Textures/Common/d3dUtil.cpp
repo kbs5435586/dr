@@ -42,7 +42,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> d3dUtil::CreateDefaultBuffer(
     UINT64 byteSize,
     Microsoft::WRL::ComPtr<ID3D12Resource>& uploadBuffer)
 {
-    ComPtr<ID3D12Resource> defaultBuffer;
+    ComPtr<ID3D12Resource> defaultBuffer;   
 
     // Create the actual default buffer resource.
     ThrowIfFailed(device->CreateCommittedResource(

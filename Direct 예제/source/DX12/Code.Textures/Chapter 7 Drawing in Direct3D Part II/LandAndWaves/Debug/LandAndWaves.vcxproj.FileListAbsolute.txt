@@ -1,0 +1,2 @@
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 7 Drawing in Direct3D Part II\LandAndWaves\Debug\LandAndWaves.exe
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 7 Drawing in Direct3D Part II\LandAndWaves\Debug\LandAndWaves.pdb

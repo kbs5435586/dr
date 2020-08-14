@@ -1,6 +1,4 @@
-카툰 렌더링
-
-
+Cartoon Rendering (Cell Shading)
 
 Ambient(Ssao)
 Skinned Mesh

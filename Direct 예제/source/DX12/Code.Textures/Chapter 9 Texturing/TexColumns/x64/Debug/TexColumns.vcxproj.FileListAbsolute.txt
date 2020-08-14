@@ -1,0 +1,2 @@
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.exe
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 9 Texturing\TexColumns\x64\Debug\TexColumns.pdb

@@ -19,7 +19,6 @@ private:
 	HRESULT					Ready_Layer_Cube(const _tchar* pLayerTag);
 	HRESULT					Ready_Layer_Rect(const _tchar* pLayerTag);
 	HRESULT					Ready_Layer_TextureRect(const _tchar* pLayerTag);
-
 public:
 	static CScene_Logo*		Create(ID3D12Device* pGraphic_Device);
 protected:

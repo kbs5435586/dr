@@ -19,9 +19,10 @@ public:
 protected:
     virtual void					Free();
 private:
-    ID3D12Resource*                 m_pTextureUpLoadHeap = nullptr;
     TEXTURE_TYPE                    m_eType = TEXTURE_TYPE_END;
+    _uint                           m_iTexuterIdx = 0;
 private:
     vector< ID3D12Resource*>        m_vecTexture;
+    vector< ID3D12Resource*>        m_vecTextureUpload;
 };
 

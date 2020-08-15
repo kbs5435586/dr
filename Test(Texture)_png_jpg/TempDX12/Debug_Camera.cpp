@@ -24,7 +24,7 @@ HRESULT CDebug_Camera::Ready_GameObject(void* pArg)
 	if (FAILED(CCamera::Ready_GameObject()))
 		return E_FAIL;
 
-	m_pTransform->SetUp_Speed(5.f, XMConvertToRadians(90.f));
+	m_pTransform->SetUp_Speed(10.f, XMConvertToRadians(90.f));
 
 	m_ptMouse.x = static_cast<LONG>(WINCX) / 2;
 	m_ptMouse.y = static_cast<LONG>(WINCY) / 2;
@@ -58,13 +58,13 @@ _int CDebug_Camera::Update_GameObject(const _float& fTimeDelta)
 	_long	MouseMove = 0;
 	if (MouseMove = m_pInput_Device->Get_DIMouseMove(CInput::DIM_X))
 	{
-		m_pTransform->Rotation_Y(MouseMove * fTimeDelta * 0.1f);
+		m_pTransform->Rotation_Y(MouseMove * fTimeDelta * 0.5f);
 	}
 
 	
 	if (MouseMove = CInput::GetInstance()->Get_DIMouseMove(CInput::DIM_Y))
 	{
-		m_pTransform->Rotation_Axis(XMConvertToRadians((_float)MouseMove) * -fTimeDelta*5.f, m_pTransform->Get_StateInfo(CTransform::STATE_RIGHT));
+		m_pTransform->Rotation_Axis(XMConvertToRadians((_float)MouseMove) * -fTimeDelta*30.f, m_pTransform->Get_StateInfo(CTransform::STATE_RIGHT));
 	}
 
 

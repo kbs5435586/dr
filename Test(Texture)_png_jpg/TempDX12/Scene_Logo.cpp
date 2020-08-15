@@ -84,10 +84,9 @@ HRESULT CScene_Logo::Ready_Prototype_Component()
 	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Buffer_RectTex", 
 		CBuffer_RectTex::Create(m_pGraphic_Device))))
 		return E_FAIL;
-	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Texture_Brick0", 
+	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Texture_Bricks", 
 		CTexture::Create(m_pGraphic_Device, L"../Resource/bricks%d.dds", 3,TEXTURE_TYPE_DDS))))
 		return E_FAIL;
-
 
 	Safe_Release(pManagement);
 	return S_OK;
@@ -167,23 +166,8 @@ HRESULT CScene_Logo::Ready_Layer_TextureRect(const _tchar* pLayerTag)
 
 	pManagement->AddRef();
 
-	int num = 0;
-	if (FAILED(pManagement->Add_GameObjectToLayer
-	(
-		L"GameObject_TextureRect",
-		SCENE_LOGO, pLayerTag,
-		nullptr, (void*)&num
-	)))
-		num++;
-	if (FAILED(pManagement->Add_GameObjectToLayer
-	(
-		L"GameObject_TextureRect",
-		SCENE_LOGO, pLayerTag,
-		nullptr, (void*)&num
-	)))
+	if (FAILED(pManagement->Add_GameObjectToLayer(L"GameObject_TextureRect",SCENE_LOGO, pLayerTag)))
 		return E_FAIL;
-
-
 
 	Safe_Release(pManagement);
 	return S_OK;

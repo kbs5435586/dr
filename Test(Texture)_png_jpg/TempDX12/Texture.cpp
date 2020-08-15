@@ -9,7 +9,7 @@ CTexture::CTexture(ID3D12Device* pGraphic_Device)
 
 CTexture::CTexture(const CTexture& rhs)
 	: CComponent(rhs)
-	, m_pTextureUpLoadHeap(rhs.m_pTextureUpLoadHeap)
+	, m_vecTextureUpload(rhs.m_vecTextureUpload)
 	, m_vecTexture(rhs.m_vecTexture)
 {
 
@@ -22,21 +22,50 @@ HRESULT CTexture::Ready_Texture(const _tchar* pFilepath, _uint iNum, TEXTURE_TYP
 	CDevice::GetInstance()->Open();
 	if (eType == TEXTURE_TYPE_DDS)
 	{
-		for (_uint i = 0; i < iNum; ++i)
+		if (iNum == 0)
 		{
 			_tchar	szFilePath[MAX_PATH] = L"";
 			ID3D12Resource* pTexture;
-			wsprintf(szFilePath, pFilepath, i);
+			ID3D12Resource* pTextureUpload;
+			wsprintf(szFilePath, pFilepath, 0);
 
 			if (FAILED(CreateDDSTextureFromFile12(CDevice::GetInstance()->GetDevice(),
-				CDevice::GetInstance()->GetCommandList(), szFilePath, pTexture, m_pTextureUpLoadHeap)))
+				CDevice::GetInstance()->GetCommandList(), szFilePath, pTexture, pTextureUpload)))
 			{
 				return E_FAIL;
 			}
 			pTexture->SetName(L"Texture");
 			if (pTexture != nullptr)
+			{
 				m_vecTexture.push_back(pTexture);
+				m_vecTextureUpload.push_back(pTextureUpload);
+			}
+
 		}
+		else
+		{
+			for (_uint i = 0; i < iNum; ++i)
+			{
+				_tchar	szFilePath[MAX_PATH] = L"";
+				ID3D12Resource* pTexture;
+				ID3D12Resource* pTextureUpload;
+				wsprintf(szFilePath, pFilepath, i);
+
+				if (FAILED(CreateDDSTextureFromFile12(CDevice::GetInstance()->GetDevice(),
+					CDevice::GetInstance()->GetCommandList(), szFilePath, pTexture, pTextureUpload)))
+				{
+					return E_FAIL;
+				}
+				pTexture->SetName(L"Texture");
+				if (pTexture != nullptr)
+				{
+					m_vecTexture.push_back(pTexture);
+					m_vecTextureUpload.push_back(pTextureUpload);
+
+				}
+			}
+		}
+
 	}
 
 	CDevice::GetInstance()->Close();
@@ -58,6 +87,7 @@ CTexture* CTexture::Create(ID3D12Device* pGraphic_Device, const _tchar* pFilepat
 }
 HRESULT CTexture::Create_ShaderResourceView(_uint iNum)
 {
+	m_iTexuterIdx = iNum;
 	CD3DX12_CPU_DESCRIPTOR_HANDLE hDescriptor(
 		CDevice::GetInstance()->GetShaderResourceDescriptorHeap()->GetCPUDescriptorHandleForHeapStart());
 
@@ -70,25 +100,27 @@ HRESULT CTexture::Create_ShaderResourceView(_uint iNum)
 	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 
 	CDevice::GetInstance()->GetDevice()->CreateShaderResourceView(m_vecTexture[iNum],&srvDesc, hDescriptor);
+	
 	return S_OK;
 }
 HRESULT CTexture::SetUp_OnShader(ID3D12GraphicsCommandList* pCommandLst)
 {
-	CD3DX12_GPU_DESCRIPTOR_HANDLE hTexture(
-		CDevice::GetInstance()->GetShaderResourceDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
-	hTexture.Offset(0, CDevice::GetInstance()->GetSrvDescriptorSize());
-
 	auto heap = CDevice::GetInstance()->GetShaderResourceDescriptorHeap();
+	CD3DX12_GPU_DESCRIPTOR_HANDLE hTexture
+	(		
+		heap->GetGPUDescriptorHandleForHeapStart());
+		hTexture.Offset(0, CDevice::GetInstance()->GetSrvDescriptorSize()
+	);
 	pCommandLst->SetDescriptorHeaps(1, &heap);
 	pCommandLst->SetGraphicsRootDescriptorTable(0, hTexture);
+	//pCommandLst->SetGraphicsRootShaderResourceView(0, m_vecTexture[m_iTexuterIdx]->GetGPUVirtualAddress());
+	
 	return S_OK;
 }
 CComponent* CTexture::Clone_Component(void* pArg)
 {
 	return new CTexture(*this);
 }
-
-
 
 void CTexture::Free()
 {
@@ -99,7 +131,12 @@ void CTexture::Free()
 			iter->Release();
 		}
 	}
-	if (m_pTextureUpLoadHeap)
-		m_pTextureUpLoadHeap->Release();
+	for (auto& iter : m_vecTextureUpload)
+	{
+		if (iter)
+		{
+			iter->Release();
+		}
+	}
 	CComponent::Free();
 }

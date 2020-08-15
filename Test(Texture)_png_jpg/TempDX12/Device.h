@@ -26,6 +26,7 @@ public:
 public:
 	HRESULT										CreateRootSignature();
 	HRESULT										CreateRootSignature(int i);
+	HRESULT										CreateRootSignature(bool b);
 public:
 	ID3D12Device*								GetDevice() { return m_pDevice; }
 	ID3D12GraphicsCommandList*					GetCommandList() { return m_pCommandList; }
@@ -59,7 +60,7 @@ private:
 	_uint										m_iCbvDescriptorIncrementSize = 0;
 	_uint										m_iSrvDescriptorIncrementSize = 0;
 public:
-	_uint						GetSrvDescriptorSize() {return m_iSrvDescriptorIncrementSize;}
+	_uint										GetSrvDescriptorSize() {return m_iSrvDescriptorIncrementSize;}
 private:
 	IDXGIFactory4*								m_pFactory = nullptr;
 	IDXGISwapChain3*							m_pSwapChain = nullptr;

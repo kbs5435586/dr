@@ -27,21 +27,20 @@ HRESULT CTextureRect::Ready_GameObject(void* pArg)
 		return E_FAIL;
 	if (FAILED(CreatePipeLine(m_pShaderCom)))
 		return E_FAIL;
-	//int iTemp = *(void*)&pArg;
-	////////////////////////////////////////////////////
+
 	if (m_pTextureCom != nullptr)
 	{
 		if (FAILED(m_pTextureCom->Create_ShaderResourceView()))
 			return E_FAIL;
 	}
 	m_pTransformCom->SetUp_Speed(30.f, XMConvertToRadians(30.f));
-	m_pTransformCom->Set_StateInfo(CTransform::STATE_POSITION, &_vec3(rand()%10, 0.f, 0.f));
+	m_pTransformCom->Set_StateInfo(CTransform::STATE_POSITION, &_vec3(0.f, 0.f, 0.f));
 
 	return S_OK;
 }
 _int CTextureRect::Update_GameObject(const _float& fTimeDelta)
 {
-	m_pTransformCom->Rotation_Z(-fTimeDelta);
+	//m_pTransformCom->Rotation_Z(-fTimeDelta);
 	return _int();
 }
 _int CTextureRect::LastUpdate_GameObject(const _float& fTimeDelta)
@@ -73,6 +72,7 @@ void CTextureRect::Render_GameObject()
 
 		CDevice::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, 
 			m_pConstBuffer->GetGPUVirtualAddress());
+		
 		m_pBufferCom->Render_VIBuffer();
 	}
 }
@@ -252,10 +252,11 @@ HRESULT CTextureRect::Ready_Component(void* pArg)
 	if (FAILED(Add_Component(L"Com_Shader", m_pShaderCom)))
 		return E_FAIL;
 
-	m_pTextureCom = (CTexture*)pManagement->Clone_Component(SCENE_LOGO, L"Component_Texture_Brick0");
+	m_pTextureCom = (CTexture*)pManagement->Clone_Component(SCENE_LOGO, L"Component_Texture_Bricks");
 	NULL_CHECK_VAL(m_pShaderCom, E_FAIL);
 	if (FAILED(Add_Component(L"Com_Texture", m_pShaderCom)))
 		return E_FAIL;
+
 	Safe_Release(pManagement);
 	return S_OK;
 }

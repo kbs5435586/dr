@@ -62,12 +62,14 @@ HRESULT CDevice::OnDestroy()
 		if (m_pRenderTargetBuffers[i])
 			m_pRenderTargetBuffers[i]->Release();
 	}
+
 	if (m_pRtvDescriptorHeap)
 		m_pRtvDescriptorHeap->Release();
 	if (m_pCbvDescriptorHeap)
 		m_pCbvDescriptorHeap->Release();
 	if (m_pSrvDescriptorHeap)
 		m_pSrvDescriptorHeap->Release();
+
 	if (m_pRootSignature)
 		m_pRootSignature->Release();
 	if (m_pCommandAllocator)
@@ -76,6 +78,7 @@ HRESULT CDevice::OnDestroy()
 		m_pCommandQueue->Release();
 	if (m_pCommandList)
 		m_pCommandList->Release();
+
 	if (m_pFence)
 		m_pFence->Release();
 	m_pSwapChain->SetFullscreenState(FALSE, nullptr);
@@ -212,6 +215,7 @@ HRESULT CDevice::CreateDescriptorHeap()
 		return E_FAIL;
 	m_iDsvDescriptorIncrementSize = m_pDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
+	//Create Constant 
 	DescHeap.NumDescriptors = 1;
 	DescHeap.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	DescHeap.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -220,7 +224,7 @@ HRESULT CDevice::CreateDescriptorHeap()
 		return E_FAIL;
 	m_iCbvDescriptorIncrementSize = m_pDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-
+	//Create Shader Resource Heap
 	DescHeap.NumDescriptors = 1;
 	DescHeap.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	DescHeap.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
@@ -401,6 +405,30 @@ HRESULT CDevice::CreateRootSignature(int i)
 	CD3DX12_ROOT_PARAMETER slotRootParameter[2] = {};
 
 	slotRootParameter[0].InitAsDescriptorTable(1, &texTable, D3D12_SHADER_VISIBILITY_PIXEL);
+	slotRootParameter[1].InitAsConstantBufferView(0);
+
+	auto staticSamplers = GetStaticSamplers();
+
+	CD3DX12_ROOT_SIGNATURE_DESC rootSigDesc(2, slotRootParameter,
+		(UINT)staticSamplers.size(), staticSamplers.data(),
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
+
+	ID3DBlob* pRootSignatureCode = nullptr;
+	ID3DBlob* pError = nullptr;
+	if (FAILED(D3D12SerializeRootSignature(&rootSigDesc, D3D_ROOT_SIGNATURE_VERSION_1, &pRootSignatureCode, &pError)))
+		return E_FAIL;
+
+	if (FAILED(m_pDevice->CreateRootSignature(0, pRootSignatureCode->GetBufferPointer(), pRootSignatureCode->GetBufferSize(), IID_PPV_ARGS(&m_pRootSignature))))
+		return E_FAIL;
+	return S_OK;
+}
+
+HRESULT CDevice::CreateRootSignature(bool b)
+{
+	CD3DX12_ROOT_PARAMETER slotRootParameter[2] = {};
+
+	//slotRootParameter[0].InitAsDescriptorTable(1, &texTable, D3D12_SHADER_VISIBILITY_PIXEL);
+	slotRootParameter[0].InitAsShaderResourceView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	slotRootParameter[1].InitAsConstantBufferView(0);
 
 	auto staticSamplers = GetStaticSamplers();

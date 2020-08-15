@@ -1,3 +1,2 @@
 ﻿  TextureRect.cpp
-D:\DownLoad\TempDr\Test(Texture)_png_jpg\TempDX12\TextureRect.cpp(37,74): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  TempDX12.vcxproj -> D:\DownLoad\TempDr\Test(Texture)_png_jpg\Debug\TempDX12.exe
+  TempDX12.vcxproj -> C:\Users\kbs54\OneDrive\바탕 화면\Map\dr\Test(Texture)_png_jpg\Debug\TempDX12.exe

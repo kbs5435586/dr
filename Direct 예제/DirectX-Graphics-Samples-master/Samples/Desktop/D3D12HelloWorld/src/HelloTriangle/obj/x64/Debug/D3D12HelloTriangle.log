@@ -1,8 +1,0 @@
-﻿  Performing Custom Build Tools
-  stdafx.cpp
-  Win32Application.cpp
-  D3D12HelloTriangle.cpp
-  DXSample.cpp
-  Main.cpp
-  코드를 생성하고 있습니다...
-  D3D12HelloTriangle.vcxproj -> C:\Users\kbs54\OneDrive\바탕 화면\Direct12 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12HelloWorld\src\HelloTriangle\bin\x64\Debug\D3D12HelloTriangle.exe

@@ -1,2 +1,0 @@
-D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 22 Quaternions\QuatDemo\x64\Debug\QuatDemo.exe
-D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 22 Quaternions\QuatDemo\x64\Debug\QuatDemo.pdb

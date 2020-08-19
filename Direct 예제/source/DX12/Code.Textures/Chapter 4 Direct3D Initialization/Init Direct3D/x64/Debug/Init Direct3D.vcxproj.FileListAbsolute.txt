@@ -1,2 +1,0 @@
-D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 4 Direct3D Initialization\Init Direct3D\x64\Debug\Init Direct3D.exe
-D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 4 Direct3D Initialization\Init Direct3D\x64\Debug\Init Direct3D.pdb

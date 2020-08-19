@@ -1,2 +1,0 @@
-D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.exe
-D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 6 Drawing in Direct3D\Box\x64\Debug\Box.pdb

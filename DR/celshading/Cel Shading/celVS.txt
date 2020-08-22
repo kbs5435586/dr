@@ -1,0 +1,43 @@
+//celVS.txt - Vertex shader for cel shading
+
+//c0-c3	worldViewProjection (total) matrix
+//c4	color
+//c5	light position
+//c6	camera position
+
+//v0	position
+//v1	normal
+
+vs.1.0
+
+//position=total matrix*v0
+m4x4 oPos, v0, c0
+
+//color=c4
+mov oD0, c4
+
+
+//r0=light vector=light position-vertex position (object space)
+sub r0, c5, v0
+
+//r1=normalize r0
+dp3 r1.w, r0, r0
+rsq r1.w, r1.w
+mul r1, r1.w, r0.xyz
+
+//tex0.x = r1 dot n
+dp3 oT0.x, r1, v1
+
+
+//r0=view vector=camera position-vertex position (object space)
+sub r0, c6, v0
+
+//r1=normalize r0
+dp3 r1.w, r0, r0
+rsq r1.w, r1.w
+mul r1, r1.w, r0.xyz
+
+//tex1.x = r1 dot n
+dp3 oT1.x, r1, v1
+
+

@@ -257,7 +257,7 @@ HRESULT CTexture_Terrain::Ready_Component(void* pArg)
 	if (FAILED(Add_Component(L"Com_Renderer", m_pRendererCom)))
 		return E_FAIL;
 
-	m_pBufferCom = (CBuffer_Terrain*)pManagement->Clone_Component(SCENE_LOGO, L"Component_Buffer_Terrain");
+	m_pBufferCom = (CBuffer_Terrain*)pManagement->Clone_Component(SCENE_LOGO, L"Component_Buffer_Terrain_Texture");
 	NULL_CHECK_VAL(m_pBufferCom, E_FAIL);
 	if (FAILED(Add_Component(L"Com_Buffer", m_pBufferCom)))
 		return E_FAIL;

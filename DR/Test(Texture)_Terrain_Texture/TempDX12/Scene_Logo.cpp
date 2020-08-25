@@ -105,7 +105,7 @@ HRESULT CScene_Logo::Ready_Layer_Camera(const _tchar* pLayerTag)
 
 	CAMERADESC		tCameraDesc;
 	ZeroMemory(&tCameraDesc, sizeof(CAMERADESC));
-	tCameraDesc.vEye = _vec3(0.f, 0.f, -5.f);
+	tCameraDesc.vEye = _vec3(0.f, 5.f, -5.f);
 	tCameraDesc.vAt = _vec3(0.f, 0.f, 1.f);
 	tCameraDesc.vAxisY = _vec3(0.f, 1.f, 0.f);
 	PROJDESC		tProjDesc;
@@ -233,6 +233,9 @@ HRESULT CScene_Logo::Add_Prototype_Component_Buffer(CManagement* pManagement)
 		return E_FAIL;
 	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Buffer_Terrain",
 		CBuffer_Terrain::Create(m_pGraphic_Device, 50, 50, 1.f))))
+		return E_FAIL;
+	if (FAILED(pManagement->Add_Prototype_Component(SCENE_LOGO, L"Component_Buffer_Terrain_Texture",
+		CBuffer_Terrain_Texture::Create(m_pGraphic_Device, 50, 50, 1.f))))
 		return E_FAIL;
 	return S_OK;
 }

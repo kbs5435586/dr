@@ -34,7 +34,6 @@ HRESULT CBuffer_Terrain_Texture::Ready_VIBuffer(const _uint& iNumVerticesX, cons
 			_uint		iIndex = i * iNumVerticesX + j;
 
 			m_pVertices[iIndex].vPosition = _vec3(j * m_fInterval, 0.0f, i * m_fInterval);
-			//m_pVertices[iIndex].vTex = _vec2(0.f, 0.f);
 			m_pVertices[iIndex].vTex = _vec2(j / (m_iNumVerticesX - 1.f) , i / (m_iNumVerticesZ - 1.f));
 		}
 	}

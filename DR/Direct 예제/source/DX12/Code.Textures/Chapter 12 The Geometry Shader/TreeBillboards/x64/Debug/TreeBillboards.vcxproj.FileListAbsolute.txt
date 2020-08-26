@@ -1,0 +1,2 @@
+C:\Users\kbs54\OneDrive\바탕 화면\Map\dr\DR\Direct 예제\source\DX12\Code.Textures\Chapter 12 The Geometry Shader\TreeBillboards\x64\Debug\TreeBillboards.exe
+C:\Users\kbs54\OneDrive\바탕 화면\Map\dr\DR\Direct 예제\source\DX12\Code.Textures\Chapter 12 The Geometry Shader\TreeBillboards\x64\Debug\TreeBillboards.pdb

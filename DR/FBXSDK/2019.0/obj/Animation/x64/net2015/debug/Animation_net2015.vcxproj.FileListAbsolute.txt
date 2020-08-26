@@ -1,0 +1,2 @@
+C:\Users\kbs54\OneDrive\바탕 화면\Map\dr\DR\FBXSDK\2019.0\bin\Animation\x64\net2015\debug\Animation.pdb
+C:\Users\kbs54\OneDrive\바탕 화면\Map\dr\DR\FBXSDK\2019.0\obj\Animation\x64\net2015\debug\Animation.pdb

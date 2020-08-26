@@ -1,0 +1,42 @@
+﻿  Base.cpp
+  Buffer_CubeCol.cpp
+  Buffer_RectCol.cpp
+  Buffer_RectTex.cpp
+  Buffer_Terrain.cpp
+  Buffer_Terrain_Texture.cpp
+  Buffer_TriCol.cpp
+  Camera.cpp
+  Component.cpp
+  Component_Manager.cpp
+  Cube.cpp
+  Debug_Camera.cpp
+  Device.cpp
+  FBX_Loader.cpp
+  Frame.cpp
+  FrameManager.cpp
+  GameObject.cpp
+  GameObject_Manager.cpp
+  Input.cpp
+  Layer.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  MainApp.cpp
+  Management.cpp
+  Rect.cpp
+  Renderer.cpp
+  Scene.cpp
+  Scene_Logo.cpp
+  Shader.cpp
+  Skinned_Data.cpp
+  System.cpp
+  TempDX12.cpp
+  Terrain.cpp
+  Texture.cpp
+  TextureRect.cpp
+  Texture_Terrain.cpp
+  Timer.cpp
+  TimerManager.cpp
+  Transform.cpp
+  VIBuffer.cpp
+  코드를 생성하고 있습니다...
+  TempDX12.vcxproj -> C:\Users\kbs54\OneDrive\바탕 화면\Map\dr\DR\Test(Static_Mash)\Debug\TempDX12.exe

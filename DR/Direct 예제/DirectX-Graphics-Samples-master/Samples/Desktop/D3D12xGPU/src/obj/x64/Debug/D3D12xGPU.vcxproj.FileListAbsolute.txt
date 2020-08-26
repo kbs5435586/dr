@@ -1,0 +1,1 @@
+D:\DownLoad\TempDr\Direct 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12xGPU\src\bin\x64\Debug\WinPixEventRuntime.dll

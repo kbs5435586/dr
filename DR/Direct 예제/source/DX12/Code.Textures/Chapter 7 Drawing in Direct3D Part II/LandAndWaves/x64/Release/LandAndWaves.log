@@ -1,0 +1,8 @@
+﻿  LandAndWavesApp.cpp
+D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Common\d3dApp.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  코드를 생성하고 있습니다.
+  5 of 1702 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  코드를 생성했습니다.
+  LandAndWaves.vcxproj -> D:\DownLoad\TempDr\Direct 예제\source\DX12\Code.Textures\Chapter 7 Drawing in Direct3D Part II\LandAndWaves\x64\Release\LandAndWaves.exe

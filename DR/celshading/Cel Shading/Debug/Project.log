@@ -1,0 +1,29 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(36,5): warning MSB4211: "IntermediateOutputPath" 속성에 처음으로 값이 설정되고 있지만 이미 "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(35,5)"에서 사용되었습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(337,5): warning MSB4211: "CleanFile" 속성에 처음으로 값이 설정되고 있지만 이미 "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(35,5)"에서 사용되었습니다.
+cl : 명령줄 warning D9035: 'Gm' 옵션은 더 이상 사용되지 않으므로 이후 릴리스에서 제거될 예정입니다.
+  WINDOW_UpdateInput.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_UpdateInput.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_Shutdown.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_Shutdown.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_SelectModeProc.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_SelectModeProc.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_SaveScreenshot.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_SaveScreenshot.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_Init.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_Init.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_HandleMessages.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_HandleMessages.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_GetFullscreenFrontBufferFormat.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_GetFullscreenFrontBufferFormat.cpp(14,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_GetDepthFormat.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_GetDepthFormat.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  WINDOW_GetBackBufferFormat.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Window\WINDOW_GetBackBufferFormat.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  TIMER.cpp
+  main.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\main.cpp(15,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  LOG.cpp
+  FPS_COUNTER.cpp
+  BITMAP_FONT.cpp
+C:\Users\User\Desktop\celshading\Cel Shading\Bitmap Font\BITMAP_FONT.cpp(13,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'D3DX8.h': No such file or directory
+  코드를 생성하고 있습니다...

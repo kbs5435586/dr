@@ -1,0 +1,14 @@
+﻿  Performing Custom Build Tools
+  Performing Custom Build Tools
+  Performing Custom Build Tools
+  stdafx.cpp
+  UILayer.cpp
+  Camera.cpp
+  D3D12xGPU.cpp
+  DXSample.cpp
+  Main.cpp
+  FrameResource.cpp
+  ShadowsFogScatteringSquidScene.cpp
+  Win32Application.cpp
+  코드를 생성하고 있습니다...
+  D3D12xGPU.vcxproj -> D:\DownLoad\TempDr\Direct 예제\DirectX-Graphics-Samples-master\Samples\Desktop\D3D12xGPU\src\bin\x64\Debug\D3D12xGPU.exe
